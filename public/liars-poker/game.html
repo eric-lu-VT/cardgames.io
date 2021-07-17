@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+    crossorigin="anonymous">
+
+    <style>
+        .container {
+          position: relative;
+        }
+        .sliding-panel {
+          position:absolute;
+          top: 0;
+          right: 0;
+        }
+        #menuEnterNickname {
+          display: none;
+        }
+        #startGameSettings {
+          display: none;
+        }
+        #initErrorMsg {
+          display: none;
+        }
+        #gameScreen {
+          display: none;
+        }
+        #gameWaitScreen {
+          display: none;
+        }
+        #takeTurnScreen {
+          display: none;
+        }
+        #resultScreen {
+          display: none;
+        }
+        #cannotJoinScreen {
+          display: none;
+        }
+        #cannotJoinScreen2 {
+          display: none;
+        }
+        #imgSharedCards img {
+          display: inline-block;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        #imgCurrentHand img {
+          display: inline-block;
+          margin-left: auto;
+          margin-right: auto;
+        }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">cardgames.io</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="dropdown10" data-bs-toggle="dropdown" aria-expanded="false">Games</a>
+              <ul class="dropdown-menu" aria-labelledby="dropdown10">
+                <li><a class="dropdown-item" href="/liars-poker/">Liar's Poker</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <div id = "main" class="container">
+      <div id="sliding-panel" class="sliding-panel">
+        <button class="btn btn-secondary dropdown-toggle" type="button" 
+        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Game Menu
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="d-flex flex-column align-items-center justify-content-center h-100">
+            
+            <h1 id="gameIdMenu"></h1>
+            <hr width = 90% size = "3">
+            <h5 id=txtPlayerNames></h5>
+
+            <div id = "menuEnterNickname" class="form-group">
+              <input type="text" placeholder="Enter New Nickname" id="txtName"/>
+            </div>
+            <div class="form-group">
+              <button
+                  type="submit"
+                  class="btn btn-success"
+                  id="btnChangeName"
+              >
+                  Change Nickname
+              </button>
+            </div>
+            <hr width = 90% size = "3">
+
+            <h5 id ="txtStartNumCardsMenu"></h5>
+            <h5 id ="txtMaxNumCardsMenu"></h5>
+          </div>
+        </div>
+      </div>
+
+      <div id="initialScreen" class="h-100">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100">
+          <hr width = 50%>
+          <h1 id="gameId0"></h1>
+          <hr width = 50%>
+          <h5 id ="txtStartNumCards"></h5>
+          <h5 id ="txtMaxNumCards"></h5>
+          <div id="startGameSettings" div class="form-group">
+            <div class="d-flex flex-column align-items-center justify-content-center h-100">
+              <hr>
+              <button
+                type="submit"
+                class="btn btn-success"
+                id="btnGameMode"
+                >
+                Game mode: NORMAL
+              </button>
+              <hr>
+              <button
+                type="submit"
+                class="btn btn-success"
+                id="btnInit"
+                >
+                Start Game
+              </button>
+
+              <div id="initErrorMsg" div class="form-group">
+                <h5>Cannot start game: need at least two players</h5>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="form-group">
+            <h5 id ="playerNames"></h5>
+          </div>
+        </div>
+      </div>
+
+      <div id="gameScreen" class="h-100">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100">
+              
+          <hr>
+          <div> <h3> Player Statuses: </h3> </div>
+          <h5 id = "playersNumCards"> </h5>
+              
+          <div id = "cardMiddleTxt"> <h3> Cards in the middle: </h3> </div> 
+          <div id = "imgSharedCards"> </div>
+
+          <div> <h3> Current hand to beat: </h3> </div>
+          <div id = "imgCurrentHand"> </div>
+
+          <div id="gameScreenAlivePlayers" class="h-100">
+            <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                  
+              <div> <h3> Your cards are: </h3> </div>
+              <div id = "imgCurrentUserCards"> </div>
+
+              <div id="gamePlayScreen" class="h-100">
+                <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                    
+                  <h5 id ="txtYourTurn"></h5>
+                  <h5>You may either propose a better hand, or challenge the previous player.</h5>
+                  <h5>(An example of a valid hand request is: "Kd 5s Tc Ah Qc".)</h5>
+                        
+                  <div class="form-group">
+                    <input type="text" placeholder="Propose New Hand" id="txtNextHand"/>
+                  </div>
+                  <div class="form-group">
+                    <button
+                      type="submit"
+                      class="btn btn-success"
+                      id="btnTakeTurn"
+                    >
+                    Take Turn
+                    </button>
+                  </div>
+        
+                  <div>OR</div>
+        
+                  <div class="form-group">
+                    <button
+                      type="submit"
+                      class="btn btn-success"
+                      id="btnChallenge"
+                    >
+                    Challenge
+                    </button>
+                  </div>
+        
+                  <div class="form-group">
+                    <h5 id ="txtTakeTurnMsg"></h5>
+                  </div>
+                </div>  
+              </div>
+            </div>
+          </div>
+
+          <div id="gameWaitScreen" class="h-100">
+            <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                
+                <div class="form-group">
+                    <h5 id ="txtNotYourTurn"></h5>
+                </div>
+
+            </div>  
+          </div>
+        </div>
+      </div>
+
+      <div id="takeTurnScreen">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100">
+          <hr>
+
+          <div id = txtCdRmv> <h3> Cards removed from the current hand: </h3> </div>
+          <div id = "imgRemovedCards"> </div>
+
+          <div> <h3> Cards added to the current hand: </h3> </div>
+          <div id = "imgAddedCards"> </div>
+
+          <div> <h3> Current hand to beat: </h3> </div>
+          <div id = "imgCurrentHand2"> </div>
+
+          <div id="showBtnOk2" class="form-group">
+            <button
+              type="submit"
+              class="btn btn-success"
+              id="btnOk2"
+              >
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="resultScreen" class="h-100">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100">
+
+          <hr>
+
+          <div> <h5> The cards in play: </h5> </div>
+          <div id = "imgCardsInPlay"> </div>
+
+          <div> <h5> The current hand </h5> </div>
+          <div id = "imgCurrentHand3"> </div>
+              
+          <div class="form-group">
+            <h5 id ="txtTurnResult"></h5>
+          </div>
+
+          <div class="form-group">
+            <h5 id ="txtTurnResult2"></h5>
+          </div>
+
+          <div class="form-group">
+            <h5 id ="txtTurnResult3"></h5>
+          </div>
+
+          <div class="form-group">
+            <h5 id ="txtTurnResult4"></h5>
+          </div>
+
+          <div id="showBtnOk" class="form-group">
+            <button
+              type="submit"
+              class="btn btn-success"
+              id="btnOk"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="cannotJoinScreen" class="h-100">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100">
+          
+          <h3>This game has already started. You cannot join.</h3>
+
+          <div class="form-group">
+            <button
+              type="submit"
+              class="btn btn-success"
+              id="btnGoBack"
+            >
+              OK
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="cannotJoinScreen2" class="h-100">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100">
+          
+          <h3>This game is full (8 players max). You cannot join.</h3>
+
+          <div class="form-group">
+            <button
+              type="submit"
+              class="btn btn-success"
+              id="btnGoBack2"
+            >
+              OK
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+    crossorigin="anonymous"></script>
+    <script>
+      
+      var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+      var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+        return new bootstrap.Dropdown(dropdownToggleEl);
+      });
+
+      let client = null;
+      let clientId = null;
+      let clientName = null;
+      let gameId = null;
+
+      const slidingPanel = document.getElementById("sliding-panel");
+      const initialScreen = document.getElementById("initialScreen");
+      const gameScreen = document.getElementById("gameScreen");
+      const gameScreenAlivePlayers = document.getElementById("gameScreenAlivePlayers");
+      const gamePlayScreen = document.getElementById("gamePlayScreen");
+      const gameWaitScreen = document.getElementById("gameWaitScreen");
+      const takeTurnScreen = document.getElementById("takeTurnScreen");
+      const resultScreen = document.getElementById("resultScreen");
+      const cannotJoinScreen = document.getElementById("cannotJoinScreen");
+      const cannotJoinScreen2 = document.getElementById("cannotJoinScreen2");
+      
+      const btnGameMode = document.getElementById("btnGameMode");
+      const btnInit = document.getElementById("btnInit");
+      const btnChangeName = document.getElementById("btnChangeName");
+      const btnTakeTurn = document.getElementById("btnTakeTurn");
+      const btnChallenge = document.getElementById("btnChallenge");
+      const btnOk = document.getElementById("btnOk");
+      const btnOk2 = document.getElementById("btnOk2");
+      const btnGoBack = document.getElementById("btnGoBack");
+      const btnGoBack2 = document.getElementById("btnGoBack2");
+
+      let socket = io();
+
+      socket.on('connect', () => {
+        clientId = socket.id;
+        clientName = clientId;
+        gameId = window.location.pathname.substring(19);
+
+        const payLoad = {
+          "clientId": clientId,
+          "clientName": clientName,
+          "gameId": gameId
+        }
+        socket.emit("join", payLoad);
+        
+        console.log(clientId); //test
+      });
+
+      btnGameMode.addEventListener("click", e => {
+        const payLoad = {
+          "gameId": gameId,
+          "gameMode": ""
+        }
+
+        if(btnGameMode.innerText === "Game mode: NORMAL") {
+          payLoad.gameMode = "HOLD_EM";
+          btnGameMode.innerText = "Game mode: HOLD_EM";
+        }
+        else if(btnGameMode.innerText === "Game mode: HOLD_EM") { 
+          payLoad.gameMode = "NORMAL";
+          btnGameMode.innerText = "Game mode: NORMAL";
+        }
+
+        socket.emit("changeGameMode", payLoad);
+      });
+
+      btnInit.addEventListener("click", e => {
+
+        const payLoad = {
+            "clientId": clientId,
+            "gameId": gameId
+        }
+        socket.emit("init", payLoad);
+      });
+
+      btnChangeName.addEventListener("click", e => {
+        
+        if(btnChangeName.innerText === "Change Nickname") {
+          btnChangeName.innerText = "OK";
+          document.getElementById("menuEnterNickname").style.display = "block";
+        }
+        else if(btnChangeName.innerText === "OK") {
+          btnChangeName.innerText = "Change Nickname";
+          document.getElementById("menuEnterNickname").style.display = "none";
+          const payLoad = {
+            "gameId": gameId,
+            "clientId": clientId,
+            "clientName": txtName.value
+          }
+          socket.emit("changeName", payLoad);
+        }
+      });
+
+      btnTakeTurn.addEventListener("click", e => {
+  
+        const payLoad = {
+            "clientId": clientId,
+            "gameId": gameId,
+            "nextHandStr": txtNextHand.value
+        }
+
+        socket.emit("takeTurn", payLoad);
+      });
+
+      btnChallenge.addEventListener("click", e => {
+
+        const payLoad = {
+            "gameId": gameId
+        }
+        socket.emit("challenge", payLoad);
+      });
+
+      var handlerOk = function(e) {
+        const payLoad = {
+            "clientId": clientId,
+            "gameId": gameId
+        }
+        socket.emit("ok", payLoad);
+      }
+
+      var handlerHome = function(e) {
+        const payLoad = {
+            "client": client,
+            "clientId": clientId,
+            "gameId": gameId
+        }
+        socket.emit("home", payLoad);
+      }
+
+      btnGoBack.addEventListener("click", e => {
+        window.location.href = "/liars-poker/";
+      });
+
+      btnGoBack2.addEventListener("click", e => {
+        window.location.href = "/liars-poker/";
+      });
+      
+      // Server => Client
+      //change name
+      socket.on("changeName", (response) => {
+        
+        clientName = response.newClientName;
+
+        var str = '<ol>'
+        response.clientsBasicInfo.forEach (c => {
+          str += '<li>'+ c.clientName + '</li>';
+        });
+        str += '</ol>';
+        document.getElementById("playerNames").innerHTML = str; 
+        document.getElementById("txtPlayerNames").innerHTML = str;
+
+        console.log("Client name Set successfully " + clientName);
+      });
+
+      /*connect - when first connect to server
+      socket.on("connect", (response) => {
+      
+        if(response != undefined) {
+          clientId = response.clientId;
+          console.log("Client id set successfully: " + clientId);
+        }
+      });
+      */
+
+      //create
+
+      socket.on("create", (response) => {
+        
+        gameId = response.gameId;
+        console.log("game successfully created with id " + gameId);
+      });
+
+      //update (also from init)
+      socket.on("update", (response) => {
+        
+        client = response.targetPlayer;
+                
+        initialScreen.style.display = "none";
+        takeTurnScreen.style.display = "none";
+        resultScreen.style.display = "none";
+        gameScreen.style.display = "block";
+        if(client.alive) {
+          gameScreenAlivePlayers.style.display = "block";
+          if(response.isCurrentPlayer) {
+            gamePlayScreen.style.display = "block";
+            gameWaitScreen.style.display = "none";
+          }
+          else {
+            gamePlayScreen.style.display = "none";
+            gameWaitScreen.style.display = "block";
+          }
+        }
+        else {
+          gameScreenAlivePlayers.style.display = "none";
+          gamePlayScreen.style.display = "none";
+          gameWaitScreen.style.display = "block";
+        }
+        // TODO: display in HTML
+        var str = '<ol>'
+        response.alivePlayersBasicInfo.forEach (p => {
+          var cardEmoji = "";
+          for(var i = 0; i < p.numCards; i++) {
+            cardEmoji += "🃏";
+          }
+          str += '<li>'+ p.clientName + ' (' + cardEmoji + ')</li>';
+        });
+        str += '</ol>';
+        document.getElementById("playersNumCards").innerHTML = str;
+                
+        while(document.getElementById("imgSharedCards").firstChild) {
+          document.getElementById("imgSharedCards").removeChild(
+            document.getElementById("imgSharedCards").firstChild);
+        }
+        if(response.gameMode === "HOLD_EM") {
+          var sharedCardsFrag = document.createDocumentFragment();
+          response.sharedCardsURL.forEach(t => {
+            var img = document.createElement('img');
+            img.src = t;
+            img.width = "128";
+            img.height = "186";
+            sharedCardsFrag.appendChild(img);
+          });
+          document.getElementById("imgSharedCards").appendChild(sharedCardsFrag);
+        }
+        else {
+          document.getElementById("cardMiddleTxt").style.display = "none";
+        }
+                
+        while(document.getElementById("imgCurrentHand").firstChild) {
+          document.getElementById("imgCurrentHand").removeChild(
+            document.getElementById("imgCurrentHand").firstChild);
+          }
+          var currentHandFrag = document.createDocumentFragment();
+          response.currentHandURL.forEach(t => {
+            var img = document.createElement('img');
+            img.src = t;
+            img.width = "128";
+            img.height = "186";
+            currentHandFrag.appendChild(img);
+          });
+          document.getElementById("imgCurrentHand").appendChild(currentHandFrag);
+
+          while(document.getElementById("imgCurrentUserCards").firstChild) {
+            document.getElementById("imgCurrentUserCards").removeChild(
+                document.getElementById("imgCurrentUserCards").firstChild);
+          }
+          var currentUserCardsFrag = document.createDocumentFragment();
+          client.cardsAsURL.forEach(t => {
+            var img = document.createElement('img');
+            img.src = t;
+            img.width = "128";
+            img.height = "186";
+            currentUserCardsFrag.appendChild(img);
+          });
+          document.getElementById("imgCurrentUserCards").appendChild(currentUserCardsFrag);
+
+          document.getElementById("txtNotYourTurn").innerHTML = 
+            response.currentPlayerName + " is moving currently...";
+          document.getElementById("txtYourTurn").innerHTML = 
+            response.currentPlayerName + ", it is currently your turn.";
+
+          clientName = response.newClientName;
+
+          var str = '<ol>'
+          response.alivePlayersBasicInfo.forEach (c => {
+            if(c.clientName === response.currentPlayerName) {
+              str += '<li> <b> <u>' + c.clientName + '</u> </b> </li>';
+            }
+            else {
+              str += '<li>' + c.clientName + '</li>';
+            }
+          });
+          str += '</ol>';
+          document.getElementById("txtPlayerNames").innerHTML = str;
+      });
+
+      //join
+      socket.on("join", (response) => {
+        if(response.active) {
+          initialScreen.style.display = "none";
+          slidingPanel.style.display = "none";
+          cannotJoinScreen.style.display = "block";
+        }
+        else if(!response.success) {
+          initialScreen.style.display = "none";
+          slidingPanel.style.display = "none";
+          cannotJoinScreen2.style.display = "block";
+        }
+        else {
+          document.getElementById("initErrorMsg").style.display = "none";
+          document.getElementById("gameId0").innerHTML = "Your game code is: " + gameId;
+          document.getElementById("gameIdMenu").innerHTML = gameId;
+
+          var str = '<ol>'
+          response.clientsBasicInfo.forEach (c => {
+            str += '<li>'+ c.clientName + '</li>';
+          });
+          str += '</ol>';
+          document.getElementById("txtStartNumCards").innerHTML = 
+            "Starting # of cards: " + response.START_NUM_CARDS;
+          document.getElementById("txtMaxNumCards").innerHTML = 
+            "Lose at this # of cards: " + response.MAX_NUM_CARDS;
+            document.getElementById("txtStartNumCardsMenu").innerHTML = 
+            "Starting # of cards: " + response.START_NUM_CARDS;
+          document.getElementById("txtMaxNumCardsMenu").innerHTML = 
+            "Lose at this # of cards: " + response.MAX_NUM_CARDS;
+          document.getElementById("playerNames").innerHTML = str;
+          document.getElementById("txtPlayerNames").innerHTML = str;
+
+          if(response.hostId === clientId) {
+            document.getElementById("startGameSettings").style.display = "block";
+          }
+        }
+      });
+
+      socket.on("failStart", () => {
+        document.getElementById("initErrorMsg").style.display = "block";
+      });
+
+      //takeTurn
+      socket.on("takeTurn", (response) => {
+        
+        if(response.result === "ERROR: weaker_hand") {
+          document.getElementById("txtTakeTurnMsg").innerHTML = 
+          "Failed to take a turn. Your request for a hand \"" + 
+          response.requestedHandStr + "\" is not better than the current hand.";
+        }
+        else if(response.result === "ERROR: invalid_hand") {
+          document.getElementById("txtTakeTurnMsg").innerHTML = 
+          "Your request for a hand is invalid. An example of a valid hand request is: \"Kd 5s Tc Ah Qc\".";
+        }
+        else if(response.result === "success") {
+          gameScreen.style.display = "none";
+          gameScreenAlivePlayers.style.display = "none";
+          gamePlayScreen.style.display = "none";
+          gameWaitScreen.style.display = "none";
+          takeTurnScreen.style.display = "block";
+          btnOk2.addEventListener("click", handlerOk);
+          document.getElementById("txtCdRmv").style.display = "block";
+                    
+          while(document.getElementById("imgRemovedCards").firstChild) {
+          document.getElementById("imgRemovedCards").removeChild(
+            document.getElementById("imgRemovedCards").firstChild);
+          }
+          var temp = false;
+          var removedCardsFrag = document.createDocumentFragment();
+          response.removedCardsURL.forEach(t => {
+            temp = true;
+            var img = document.createElement('img');
+            img.src = t;
+            img.width = "128";
+            img.height = "186";
+            removedCardsFrag.appendChild(img);
+          });
+          document.getElementById("imgRemovedCards").appendChild(removedCardsFrag);
+          if(!temp) {
+            document.getElementById("txtCdRmv").style.display = "none";
+          }
+
+          while(document.getElementById("imgAddedCards").firstChild) {
+          document.getElementById("imgAddedCards").removeChild(
+            document.getElementById("imgAddedCards").firstChild);
+          }
+          var addedCardsFrag = document.createDocumentFragment();
+          response.addedCardsURL.forEach(t => {
+            var img = document.createElement('img');
+            img.src = t;
+            img.width = "128";
+            img.height = "186";
+            addedCardsFrag.appendChild(img);
+          });
+          document.getElementById("imgAddedCards").appendChild(addedCardsFrag);
+
+          while(document.getElementById("imgCurrentHand2").firstChild) {
+          document.getElementById("imgCurrentHand2").removeChild(
+            document.getElementById("imgCurrentHand2").firstChild);
+          }
+          var currentHandFrag = document.createDocumentFragment();
+          response.currentHandURL.forEach(t => {
+            var img = document.createElement('img');
+            img.src = t;
+            img.width = "128";
+            img.height = "186";
+            currentHandFrag.appendChild(img);
+          });
+          document.getElementById("imgCurrentHand2").appendChild(currentHandFrag);
+        }
+        if(!client.alive) {
+          document.getElementById("showBtnOk2").style.display = "none";
+        }
+      });
+
+      //challenge results
+      socket.on("challenge", (response) => {
+        client = response.targetPlayer;
+
+        gameScreen.style.display = "none";
+        gameScreenAlivePlayers.style.display = "none";
+        gamePlayScreen.style.display = "none";
+        gameWaitScreen.style.display = "none";
+        resultScreen.style.display = "block";
+                
+        while(document.getElementById("imgCardsInPlay").firstChild) {
+          document.getElementById("imgCardsInPlay").removeChild(
+          document.getElementById("imgCardsInPlay").firstChild);
+        }
+        var cardsInPlayFrag = document.createDocumentFragment();
+        response.cardsInPlayURL.forEach(t => {
+          var img = document.createElement('img');
+          img.src = t;
+          img.width = "128";
+          img.height = "186";
+          cardsInPlayFrag.appendChild(img);
+        });
+        document.getElementById("imgCardsInPlay").appendChild(cardsInPlayFrag);
+                
+
+        while(document.getElementById("imgCurrentHand3").firstChild) {
+          document.getElementById("imgCurrentHand3").removeChild(
+          document.getElementById("imgCurrentHand3").firstChild);
+        }
+        var currentHandFrag = document.createDocumentFragment();
+        response.currentHandURL.forEach(t => {
+          var img = document.createElement('img');
+          img.src = t;
+          img.width = "128";
+          img.height = "186";
+          currentHandFrag.appendChild(img);
+        });
+        document.getElementById("imgCurrentHand3").appendChild(currentHandFrag);
+                    
+        if(response.gameContains) {
+          document.getElementById("txtTurnResult").innerHTML = 
+          "could be found in play.";
+          document.getElementById("txtTurnResult2").innerHTML = "The current player " 
+          + response.currentPlayerStr + " lost this round and has been given an extra card.";
+        }
+        else {
+          document.getElementById("txtTurnResult").innerHTML = 
+          "could not be found in play.";
+          document.getElementById("txtTurnResult2").innerHTML = "The previous player " 
+          + response.prevPlayerStr + " lost this round and has been given an extra card.";
+        }
+        if(response.playerEliminated) {
+          document.getElementById("txtTurnResult3").innerHTML = response.eliminatedPlayerStr
+          + " has too many cards and has been eliminated.";
+        }
+        if(response.winnerDetermined) {
+          document.getElementById("txtTurnResult4").innerHTML = response.winnerPlayerStr + 
+          " has won the game!";
+          btnOk.addEventListener("click", handlerHome);
+        }
+        else {
+          btnOk.addEventListener("click", handlerOk);
+        }
+        if(!client.alive) {
+          document.getElementById("showBtnOk").style.display = "none";
+        }
+      });
+
+      //ok
+      socket.on("ok", (response) => {
+        
+        if(response.num_ok_needed !== 0) {
+          btnOk.removeEventListener("click", handlerOk);
+          btnOk2.removeEventListener("click", handlerOk);
+          //TODO: add more
+        }
+      });
+
+      //home
+      socket.on("home", () => {
+        window.location.href = "/liars-poker/";
+        /*
+        slidingPanel.style.display = "block";
+        initialScreen.style.display = "block";
+        gameScreen.style.display = "none";
+        gameScreenAlivePlayers.style.display = "none";
+        gamePlayScreen.style.display = "none";
+        gameWaitScreen.style.display = "none";
+        resultScreen.style.display = "none";
+        */
+      });
+
+    </script>
+  </body>
+</html>
