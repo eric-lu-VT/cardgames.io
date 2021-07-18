@@ -38,7 +38,7 @@ A website that hosts functional implementations of various card games, to be pla
   - Add name length limit
 
 ## Built With
-- Javascript - Backend
+- Javascript - Backend & Frontend functionality
 - HTML - Frontend
 - CSS - Frontend formatting
 - Node.js - JavaScript applet execution on website
