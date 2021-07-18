@@ -18,7 +18,7 @@ A website that hosts functional implementations of various card games, to be pla
 
 ## Known Issues
 - Main Website
-  - Front page display screwed up
+  - A lot of empty space on front page
 - Liar's Poker
   - On join screen, hostship of game does not switch if host leaves
   - Name changing
