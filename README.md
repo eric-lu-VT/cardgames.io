@@ -5,8 +5,12 @@ A website that hosts functional implementations of various card games, to be pla
 ## Impressions
 
 ### Main Website
+![img](https://imgur.com/rCGWfnR)
 
 ### Liar's Poker
+![img](https://imgur.com/UEw1NFB)
+![img](https://imgur.com/E0Grf4y)
+![img](https://imgur.com/tBK6wdg)
 
 ## Games Implemented
 - Liar's Poker (also known as Commune)
@@ -14,7 +18,7 @@ A website that hosts functional implementations of various card games, to be pla
 
 ## Known Issues
 - Main Website
-  - Display of website header screws up presentation of front page screen on mobile devices
+  - Front page display screwed up
 - Liar's Poker
   - On join screen, hostship of game does not switch if host leaves
   - Name changing
@@ -40,7 +44,9 @@ A website that hosts functional implementations of various card games, to be pla
 - Node.js - JavaScript applet execution on website
 - npm - Node package manager
 - [Socket.IO](https://github.com/socketio/socket.io) - supports real-time, bi-directional communication between web clients and servers.
+- [Express](https://github.com/expressjs/express) - Backend web application framework
 - [card-deck](https://github.com/kadamwhite/node-card-deck) - basic Deck interface 
+- [Bootstrap 5.0.2](https://github.com/twbs/bootstrap) - Frontend display 
 
 
 
