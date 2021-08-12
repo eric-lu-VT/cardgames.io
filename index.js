@@ -43,8 +43,8 @@ var values = ['2', '3', '4', '5', '6', '7', '8', '9',
               '10', 'jack', 'queen', 'king', 'ace'];
 var suits = ['null', 'clubs', 'diamonds', 'hearts', 'spades'];
 
-io.on('connection', client => {
-  console.log('Client connected');
+io.of("/liars-poker").on('connection', client => {
+  console.log('Client connected: Liars Poker');
 
   client.on("disconnect", () => {
     if(client.gameId !== undefined) {
@@ -109,7 +109,7 @@ io.on('connection', client => {
         });
         //loop through all clients and tell them that people has joined
         curGame.clients.forEach(c => {
-          io.to(c.clientId).emit("join", payLoad);
+          io.of("/liars-poker").to(c.clientId).emit("join", payLoad);
         });
       }
       else {
@@ -164,7 +164,7 @@ io.on('connection', client => {
       "gameId" : gameId
     }
 
-    io.to(clientId).emit("create", payLoad);
+    io.of("/liars-poker").to(clientId).emit("create", payLoad);
   });
 
   //a client want to join
@@ -175,7 +175,7 @@ io.on('connection', client => {
     const curGame = games[gameId];
 
     if(curGame == undefined) {
-      io.to(clientId).emit("home");
+      io.of("/liars-poker").to(clientId).emit("home");
     }
     else {
       if(curGame.hostId == undefined) {
@@ -191,11 +191,11 @@ io.on('connection', client => {
       }
       if(curGame.active) {
         payLoad.active = true;
-        io.to(clientId).emit("join", payLoad);
+        io.of("/liars-poker").to(clientId).emit("join", payLoad);
       }
       else if(curGame.clients.length >= 8) {
         payLoad.success = false;
-        io.to(clientId).emit("join", payLoad);
+        io.of("/liars-poker").to(clientId).emit("join", payLoad);
       }
       else {
         client.join(gameId, function() {
@@ -258,7 +258,7 @@ io.on('connection', client => {
         });
         //loop through all clients and tell them that people has joined
         curGame.clients.forEach(c => {
-          io.to(c.clientId).emit("join", payLoad);
+          io.of("/liars-poker").to(c.clientId).emit("join", payLoad);
         });
       }
     }
@@ -274,7 +274,7 @@ io.on('connection', client => {
     //TODO: Need to add more backend stuff
     const curGame = games[result.gameId];
     if(curGame.clients.length < 2) {
-      io.to(result.clientId).emit("failStart");
+      io.of("/liars-poker").to(result.clientId).emit("failStart");
     }
     else {
       curGame.active = true;
@@ -313,7 +313,7 @@ io.on('connection', client => {
     });
 
     curGame.clients.forEach(c => {
-      io.to(c.clientId).emit("changeName", payLoad);
+      io.of("/liars-poker").to(c.clientId).emit("changeName", payLoad);
     });
   });
 
@@ -335,7 +335,7 @@ io.on('connection', client => {
       var nextHand = makeHand(result.nextHandStr);
       if(handCompare(nextHand, curGame.currentHand) <= 0) {
         payLoad.result = "ERROR: weaker_hand";
-        io.to(result.clientId).emit("takeTurn", payLoad);
+        io.of("/liars-poker").to(result.clientId).emit("takeTurn", payLoad);
       }
       else {
         var prevHand = [];
@@ -370,16 +370,16 @@ io.on('connection', client => {
         payLoad.result = "success";
         //update game screen for all clients
         curGame.alivePlayers.forEach(c => {
-          io.to(c.clientId).emit("takeTurn", payLoad);
+          io.of("/liars-poker").to(c.clientId).emit("takeTurn", payLoad);
         });
         curGame.deadPlayers.forEach(c => {
-          io.to(c.clientId).emit("takeTurn", payLoad);
+          io.of("/liars-poker").to(c.clientId).emit("takeTurn", payLoad);
         })
       }
     }
     catch(e) {
       payLoad.result = "ERROR: invalid_hand";
-      io.to(result.clientId).emit("takeTurn", payLoad);
+      io.of("/liars-poker").to(result.clientId).emit("takeTurn", payLoad);
     }
   });
 
@@ -434,11 +434,11 @@ io.on('connection', client => {
     //update game screen for all clients
     curGame.alivePlayers.forEach(c => { // TODO: fix all this
       payLoad.targetPlayer = c;
-      io.to(c.clientId).emit("challenge", payLoad);
+      io.of("/liars-poker").to(c.clientId).emit("challenge", payLoad);
     });
     curGame.deadPlayers.forEach(c => { // This is just a stopgap; needs fixing
       payLoad.targetPlayer = c;
-      io.to(c.clientId).emit("challenge", payLoad);
+      io.of("/liars-poker").to(c.clientId).emit("challenge", payLoad);
     });
   });
 
@@ -453,7 +453,7 @@ io.on('connection', client => {
       update(curGame);
     }
     else {
-      io.to(result.clientId).emit("ok", payLoad);
+      io.of("/liars-poker").to(result.clientId).emit("ok", payLoad);
     }
   });
 
@@ -475,9 +475,17 @@ io.on('connection', client => {
     }
     client.gameId = undefined;
 
-    io.to(result.clientId).emit("home");
+    io.of("/liars-poker").to(result.clientId).emit("home");
   });
   
+});
+
+io.of("/test").on('connection', client => {
+  console.log('Client connected: Test');
+
+  client.on("join", () => {
+    console.log("Test function recieved");
+  });
 });
 
 function populateDeck() {
@@ -573,7 +581,7 @@ function update(curGame) {
       else {
           payLoad.isCurrentPlayer = false;
       }
-      io.to(c.clientId).emit("update", payLoad);
+      io.of("/liars-poker").to(c.clientId).emit("update", payLoad);
   });
   curGame.deadPlayers.forEach(c => {
     payLoad.targetPlayer = c;
@@ -583,7 +591,7 @@ function update(curGame) {
     else {
         payLoad.isCurrentPlayer = false;
     }
-    io.to(c.clientId).emit("update", payLoad);
+    io.of("/liars-poker").to(c.clientId).emit("update", payLoad);
   });
 }
 

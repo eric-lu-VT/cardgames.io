@@ -102,7 +102,7 @@
         const btnJoin = document.getElementById("btnJoin");
         const btnHelp = document.getElementById("btnHelp");
         
-        let socket = io();
+        var socket = io("/liars-poker");
 
         socket.on('connect', () => {
             clientId = socket.id;

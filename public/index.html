@@ -75,12 +75,14 @@
         
         const btnRedirect = document.getElementById("btnRedirect");
 
-        let socket = io();
+        let socket = io("/test");
 
         socket.on('connect', () => {
             clientId = socket.id;
             console.log(clientId); //test
+            socket.emit("join");
         });
+
 
         btnRedirect.addEventListener("click", e => {
             window.location.href = "/liars-poker";

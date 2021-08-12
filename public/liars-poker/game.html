@@ -359,7 +359,7 @@
       const btnGoBack = document.getElementById("btnGoBack");
       const btnGoBack2 = document.getElementById("btnGoBack2");
 
-      let socket = io();
+      var socket = io("/liars-poker");
 
       socket.on('connect', () => {
         clientId = socket.id;
