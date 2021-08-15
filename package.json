@@ -7,17 +7,30 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "compile:sass": "sass public/scss:public/assets/css",
     "start": "node index.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "Bootstrap",
+    "bootstrap-v5",
+    "sass",
+    "learn-bootstrap",
+    "learn-sass"
+  ],
+  "author": "Eric Lu",
   "license": "ISC",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "bootstrap": "^5.0.0-beta3",
     "card-deck": "^1.0.1",
     "express": "^4.17.1",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.6.0",
     "jsdom": "^16.6.0",
     "require.js": "^1.0.0",
     "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "sass": "^1.37.5"
   }
 }

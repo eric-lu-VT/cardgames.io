@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Liar's Poker - netcardgames.org</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/vendors/css/glightbox.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+      .rounded-pill {
+        width: 25%;
+        left: 37.5%;
+        padding: 2px;
+        margin-bottom: 16px
+      }
+      .form-control {
+          position: absolute;
+          width: 25%;
+          left: 37.5%;
+          align-self: center;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark menu shadow fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">netcardgames.org</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="/liars-poker">Liar's Poker</a></li>
+            <li class="nav-item"><a class="nav-link" href=""></a></a></li>
+            <li class="nav-item"><a class="nav-link" href="https://eric-lu.com/about">FAQ</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://eric-lu.com/contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section id="faq" class="faq">
+      <div class="container">
+        <div class="row text-center mt-5"></div>
+        <div class="row mt-5 mb-4 g-3 text-center">
+          <h1 class="display-3 fw-bold text-uppercase">Liar's Poker</h1>
+          <div class="heading-line"></div>
+          <div>
+            <button type="button" class="rounded-pill btn-rounded border-primary" style="margin-bottom: 0px" id="btnCreate">
+              <a class="nav-link">
+                Create New Game
+              </a>
+            </button>
+          </div>
+
+          <div style="position: relative">
+            <h4 class="fw-bold lead mb-3">OR</h4>
+            <input type="email" placeholder="Enter Game Code" id="txtGameId" class="form-control form-control-md" style="text-align: center">
+          </div>
+
+          <div>
+            <button type="button" class="rounded-pill btn-rounded border-primary" style="margin-top: 26px" id="btnJoin">
+              <a class="nav-link">
+                Join Game
+              </a>
+            </button>
+          </div>
+
+          <div>
+            <button type="button" class="rounded-pill btn-rounded border-primary">
+              <a class="nav-link" href="/liars-poker/help">
+                Help
+              </a>
+            </button>
+          </div>
+            
+          <div>
+            <h4 class="fw-bold lead mb-3" id="txtJoinError"></h4>
+          </div>
+        </div>
+        <div class="row text-center mt-5"></div>
+        <div class="row text-center mt-5"></div>
+        <div class="row text-center mt-5"></div>
+      </div>
+    </section>
+
+    <footer class="footer fixed-bottom">
+      <!-- START THE SOCIAL MEDIA CONTENT  -->
+      <div class="footer-sm" >
+        <div class="container">
+          <div class="row py-2 text-center text-white">
+            <div class="col-12">
+              <div class="footer-bottom__copyright">
+                <a href="https://github.com/eric-lu-VT/netcardgames.org"><i class="fab fa-github" style="font-size: 16px"></i></a>
+                | Created by <a href="https://eric-lu.com/" target="_blank">Eric Lu</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </footer>
+
+    <script src="../assets/vendors/glightbox/js/glightbox.min.js"></script>
+
+    <script type="text/javascript">
+      const lightbox = GLightbox({
+        'href': 'https://www.youtube.com/watch?v=J9lS14nM1xg',
+        'type': 'video',
+        'source': 'youtube', //vimeo, youtube or local
+        'width': 900,
+        'autoPlayVideos': 'true',
+      });
+    
+    </script>
+     
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      let clientId =  null;
+
+      const btnCreate = document.getElementById("btnCreate");
+      const txtGameId = document.getElementById("txtGameId");
+      const btnJoin = document.getElementById("btnJoin");
+      
+      var socket = io("/liars-poker");
+
+      socket.on('connect', () => {
+        clientId = socket.id;
+        console.log(clientId); //test
+      });
+
+      btnCreate.addEventListener("click", e => {
+        socket.emit("create", clientId);
+      });
+
+      btnJoin.addEventListener("click", e => {
+        if(txtGameId.value === "") {
+          document.getElementById("txtJoinError").innerHTML = 
+          "Failed to join a game. You did not enter a valid game code in.";
+        }
+        else {
+          window.location.href = "/liars-poker/rooms/" + txtGameId.value;
+        }
+      });
+
+      socket.on("create", (response) => {
+        window.location.href = "/liars-poker/rooms/" + response.gameId;
+      });
+
+    </script>
+  </body>
+</html>

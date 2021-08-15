@@ -17,18 +17,18 @@ const path = require('path');
 
 const server = express()
   .use('/', express.static(path.join(__dirname, 'public')))
-  .get("/", (req,res)=> res.sendFile(__dirname + "/public/index.html"))
-  .get("/liars-poker", (req,res)=> res.sendFile(__dirname + "/public/liars-poker/join.html")) 
-  .get("/liars-poker/help", (req,res)=> res.sendFile(__dirname + "/public/liars-poker/help.html")) 
+  .get("/", (req,res)=> res.sendFile(__dirname + "/public/pages/index.html"))
+  .get("/liars-poker", (req,res)=> res.sendFile(__dirname + "/public/pages/liars-poker/join.html")) 
+  .get("/liars-poker/help", (req,res)=> res.sendFile(__dirname + "/public/pages/liars-poker/help.html")) 
   .get("/liars-poker/rooms/:id", (req,res)=> {
     if(games[req.params.id] === undefined) {
-      res.sendFile(__dirname + "/public/error.html");
+      res.sendFile(__dirname + "/public/pages/error.html");
     }
     else {
-      res.sendFile(__dirname + "/public/liars-poker/game.html");
+      res.sendFile(__dirname + "/public/pages/liars-poker/game.html");
     }
   })
-  .get('*', (req,res)=> res.sendFile(__dirname + "/public/error.html"))
+  .get('*', (req,res)=> res.sendFile(__dirname + "/public/pages/error.html"))
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 /*
 const server = express()
