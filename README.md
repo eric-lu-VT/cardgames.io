@@ -20,6 +20,10 @@ A website that hosts functional implementations of various card games, to be pla
 - General
   - Need to fix frontend display spacing and sizing on mobile devices
   - Accordions overlapping over each other
+  - SEO (Lighthouse)
+    - Add meta description
+    - Add robots.txt
+    - Configure Progressive Web App stuff
 - Liar's Poker
   - On join screen, hostship of game does not switch if host leaves
   - Name changing
@@ -32,7 +36,6 @@ A website that hosts functional implementations of various card games, to be pla
 - Liar's Poker
   - Refactor frontend code
   - Add spectators to active games
-  - Make info on Poker ranks accessable directly on website
   - Add name length limit
 
 
