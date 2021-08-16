@@ -170,8 +170,8 @@ io.of("/liars-poker").on('connection', client => {
   //a client want to join
   client.on("join", (result) => {
     const clientId = result.clientId;
-    const clientName = result.clientName;
-    const gameId = result.gameId;
+    const clientName = sanitizeInput(result.clientName);
+    const gameId = sanitizeInput(result.gameId);
     const curGame = games[gameId];
 
     if(curGame == undefined) {
@@ -265,14 +265,14 @@ io.of("/liars-poker").on('connection', client => {
   });
 
   client.on("changeGameMode", (result) => {
-    const curGame = games[result.gameId];
+    const curGame = games[sanitizeInput(result.gameId)];
     curGame.gameMode = result.gameMode;
   });
 
   //a client calls for the game to begin (init)
   client.on("init", (result) => {
     //TODO: Need to add more backend stuff
-    const curGame = games[result.gameId];
+    const curGame = games[sanitizeInput(result.gameId)];
     if(curGame.clients.length < 2) {
       io.of("/liars-poker").to(result.clientId).emit("failStart");
     }
@@ -294,11 +294,11 @@ io.of("/liars-poker").on('connection', client => {
   //a client want to change name
   client.on("changeName", (result) => {
     
-    const curGame = games[result.gameId];
-    const clientName = result.clientName;
+    const curGame = games[sanitizeInput(result.gameId)];
+    const clientName = sanitizeInput(result.clientName);
     curGame.clients.forEach(c => {
       if(c.clientId === result.clientId) {
-        c.clientName = result.clientName;
+        c.clientName = clientName;
       }
     });
 
@@ -319,7 +319,7 @@ io.of("/liars-poker").on('connection', client => {
 
   //a client takes his turn (or attempts to)
   client.on("takeTurn", (result) => {
-    const curGame = games[result.gameId]; 
+    const curGame = games[sanitizeInput(result.gameId)]; 
     const payLoad = {
       "addedCardsStr": "",
       "removedCardsStr": "",
@@ -328,11 +328,11 @@ io.of("/liars-poker").on('connection', client => {
       "removedCardsURL": "",
       "currentHandURL": "",
       "result": "",
-      "requestedHandStr": result.nextHandStr
+      "requestedHandStr": sanitizeInput(result.nextHandStr)
     }
 
     try { 
-      var nextHand = makeHand(result.nextHandStr);
+      var nextHand = makeHand(sanitizeInput(result.nextHandStr));
       if(handCompare(nextHand, curGame.currentHand) <= 0) {
         payLoad.result = "ERROR: weaker_hand";
         io.of("/liars-poker").to(result.clientId).emit("takeTurn", payLoad);
@@ -385,7 +385,7 @@ io.of("/liars-poker").on('connection', client => {
 
   //a client challenges
   client.on("challenge", (result) => {
-    const curGame = games[result.gameId]; 
+    const curGame = games[sanitizeInput(result.gameId)]; 
     const payLoad = {
       "gameContains": false,
       "playerEliminated": false,
@@ -443,7 +443,7 @@ io.of("/liars-poker").on('connection', client => {
   });
 
   client.on("ok", (result) => {
-    const curGame = games[result.gameId];
+    const curGame = games[sanitizeInput(result.gameId)];
     curGame.pressedOk++;
     const payLoad = {
       "num_ok_needed": curGame.alivePlayers.length - curGame.pressedOk
@@ -459,7 +459,7 @@ io.of("/liars-poker").on('connection', client => {
 
   client.on("home", (result) => {
 
-    const curGame = games[result.gameId];
+    const curGame = games[sanitizeInput(result.gameId)];
     client.leave(result.gameId, function() {
       // console.log(client.id + " now in rooms ", client.rooms);
     });
@@ -471,7 +471,7 @@ io.of("/liars-poker").on('connection', client => {
       curGame.deadPlayers.splice(curGame.deadPlayers.indexOf(result.client), 1);
     }
     if(curGame.clients.length === 0) {
-      delete games[result.gameId];
+      delete games[sanitizeInput(result.gameId)];
     }
     client.gameId = undefined;
 
@@ -635,4 +635,8 @@ function makeGameId(length) {
 
 function floorMod(n, m) {
   return Math.floor(((n % m) + m) % m);
+}
+
+function sanitizeInput(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }

@@ -37,148 +37,334 @@
     </nav>
 
     <section id="faq" class="faq">
-        <div class="container">
-            <div class="row text-center mt-5"></div>
-            <div class="row mt-5 mb-4 g-3 text-center">
-                <h1 class="display-3 fw-bold text-uppercase">What is Liar's Poker?</h1>
-                <div class="heading-line"></div>
-                <p class="lead">It's Poker... but you're guessing hands among all players!</p>
-            </div>
-            <!-- ACCORDION CONTENT  -->
-            <div class="row mt-5">
-                <div class="col-md-12">
-                    <div class="accordion" id="accordionExample">
-                        <!-- ACCORDION ITEM 1 -->
-                        <div class="accordion-item shadow mb-3 fw-light">
-                            <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                   <strong>Overview</strong>
-                                </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                <div class="accordion-body fw-light">
-                                    <ul>
-                                        <li>Each player starts the game with a certain number of cards, 
-                                        determined by how many players there are at the start of the game. 
-                                        (There are also five cards in the middle in HOLD_EM mode.)</li>
-                                        <li>Each person takes turns guessing what they think is the 
-                                        highest poker hand among all cards in play in the round.</li>
-                                        <li>Players each make guesses, with each guess being better in Poker 
-                                        rank than the previous, until a player decides to challenge the 
-                                        previous player's claim.</li>
-                                        <li>If the last hand guessed exists by combining all the cards 
-                                        in play in the round, the challenger (the current player) loses the 
-                                        round; if it doesn't exist, the previous player loses the round.</li>
-                                        <li>When a player loses a round, they get another card for all future 
-                                        rounds they're in, which helps... but if you get too many cards 
-                                        (again determined by how many players there are at the start of 
-                                        the game), you're out.</li>
-                                        <li>Last person standing wins!</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- ACCORDION ITEM 2 -->
-                        <div class="accordion-item shadow mb-3 fw-light">
-                            <h2 class="accordion-header" id="headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    <strong>Order of Play</strong>
-                                </button>
-                            </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                <div class="accordion-body fw-light">
-                                    <ol>
-                                        <li>Players are dealt their respective number of cards (varies) 
-                                        and five cards to the middle in HOLD_EM mode.</li>
-                                        <li>The starting player and order of play is randomized.</li>
-                                        <li>When it is their turn, the player can either a) propose a 
-                                        new hand that contains one to five cards and is also better 
-                                        in Poker rank than the previous hand, or b) challenge the 
-                                        previous player's claim.</li>
-                                        <li>Round play continues until a player challenges.</li>
-                                        <li>When a player challenges, all the cards in play 
-                                        (among all players and the cards in the middle) are used to see if 
-                                        the last guess can be made from them. If yes, the current player 
-                                        (the player who challenged) loses the round; if no, the previous 
-                                        player (the player who got challenged) loses the round.</li>
-                                        <li>Whoever lost the round gets another card. If they get 
-                                        six cards, they are eliminated from the game.</li>
-                                        <li>Another round starts with the remaining players still alive in 
-                                        the game. This order of play continues until a single winner 
-                                        is determined.</li>
-                                    </ol> 
-                                </div>
-                            </div>
-                        </div>
-                        <!-- ACCORDION ITEM 3 -->
-                        <div class="accordion-item shadow mb-3 fw-light">
-                            <h2 class="accordion-header" id="headingThree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    <strong>Game Settings</strong>
-                                </button>
-                            </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                <div class="accordion-body fw-light">
-                                    <table style="width:100%">
-                                        <tr>
-                                            <th># of players‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‎</th>
-                                            <th>Starting # cards‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎</th>
-                                            <th>Lose at this # cards‏‏‎‎‎</th>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>8</td>
-                                            <td>11</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>6</td>
-                                            <td>9</td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>4</td>
-                                            <td>7</td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>3</td>
-                                            <td>6</td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td>3</td>
-                                            <td>5</td>
-                                        </tr>
-                                        <tr>
-                                            <td>7</td>
-                                            <td>2</td>
-                                            <td>4</td>
-                                        </tr>
-                                        <tr>
-                                            <td>8</td>
-                                            <td>2</td>
-                                            <td>4</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+      <div class="container">
+        <div class="row text-center mt-5"></div>
+        <div class="row mt-5 mb-4 g-3 text-center">
+          <h1 class="display-3 fw-bold text-uppercase">What is Liar's Poker?</h1>
+          <div class="heading-line"></div>
+          <p class="lead">It's Poker... but you're guessing hands among all players!</p>
+        </div>
+        <!-- ACCORDION CONTENT  -->
+        <div class="row mt-5">
+          <div class="col-md-12">
+            <div class="accordion" id="accordionExample">
+              <!-- ACCORDION ITEM 1 -->
+              <div class="accordion-item shadow mb-3 fw-light">
+                <h2 class="accordion-header" id="headingOne">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    <strong>Overview</strong>
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                  <div class="accordion-body fw-light">
+                    <ul>
+                      <li>Each player starts the game with a certain number of cards, 
+                          determined by how many players there are at the start of the game. 
+                          (There are also five cards in the middle in HOLD_EM mode.)</li>
+                      <li>Each person takes turns guessing what they think is the 
+                          highest poker hand among all cards in play in the round.</li>
+                      <li>Players each make guesses, with each guess being better in Poker 
+                          rank than the previous, until a player decides to challenge the 
+                          previous player's claim.</li>
+                      <li>If the last hand guessed exists by combining all the cards 
+                          in play in the round, the challenger (the current player) loses the 
+                          round; if it doesn't exist, the previous player loses the round.</li>
+                      <li>When a player loses a round, they get another card for all future 
+                          rounds they're in, which helps... but if you get too many cards 
+                          (again determined by how many players there are at the start of 
+                          the game), you're out.</li>
+                      <li>Last person standing wins!</li>
+                    </ul>
+                  </div>
                 </div>
+              </div>
+              <!-- ACCORDION ITEM 2 -->
+              <div class="accordion-item shadow mb-3 fw-light">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <strong>Order of Play</strong>
+                  </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body fw-light">
+                      <ol>
+                        <li>Players are dealt their respective number of cards (varies) 
+                            and five cards to the middle in HOLD_EM mode.</li>
+                        <li>The starting player and order of play is randomized.</li>
+                        <li>When it is their turn, the player can either a) propose a 
+                            new hand that contains one to five cards and is also better 
+                            in Poker rank than the previous hand, or b) challenge the 
+                            previous player's claim.</li>
+                        <li>Round play continues until a player challenges.</li>
+                        <li>When a player challenges, all the cards in play 
+                            (among all players and the cards in the middle) are used to see if 
+                            the last guess can be made from them. If yes, the current player 
+                            (the player who challenged) loses the round; if no, the previous 
+                            player (the player who got challenged) loses the round.</li>
+                        <li>Whoever lost the round gets another card. If they get 
+                            six cards, they are eliminated from the game.</li>
+                        <li>Another round starts with the remaining players still alive in 
+                            the game. This order of play continues until a single winner 
+                            is determined.</li>
+                      </ol> 
+                    </div>
+                  </div>
+              </div>
+              <!-- ACCORDION ITEM 3 -->
+              <div class="accordion-item shadow mb-3 fw-light">
+                <h2 class="accordion-header" id="headingThree">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <strong>Game Settings</strong>
+                  </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                  <div class="accordion-body fw-light">
+                    <table style="width:100%">
+                      <tr>
+                        <th># of players‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‎</th>
+                        <th>Starting # cards‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎</th>
+                        <th>Lose at this # cards‏‏‎‎‎</th>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>8</td>
+                        <td>11</td>
+                      </tr>
+                      <tr>
+                        <td>3</td>
+                        <td>6</td>
+                        <td>9</td>
+                      </tr>
+                      <tr>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>7</td>
+                      </tr>
+                      <tr>
+                        <td>5</td>
+                        <td>3</td>
+                        <td>6</td>
+                      </tr>
+                      <tr>
+                        <td>6</td>
+                        <td>3</td>
+                        <td>5</td>
+                      </tr>
+                      <tr>
+                        <td>7</td>
+                        <td>2</td>
+                        <td>4</td>
+                      </tr>
+                      <tr>
+                        <td>8</td>
+                        <td>2</td>
+                        <td>4</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <!-- ACCORDION ITEM 4 -->
+              <div class="accordion-item shadow mb-3 fw-light">
+                <h2 class="accordion-header" id="headingFour">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    <strong>Poker Hand Rankings</strong>
+                  </button>
+                  </h2>
+                  <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                    <div class="accordion-body fw-light">
+                      
+                      <!-- ACCORDION ITEM 5 -->
+                      <div class="accordion-item mb-3 fw-light">
+                        <h2 class="accordion-header" id="headingFive">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                            <strong>Straight Flush (highest rank)</strong>
+                          </button>
+                          </h2>
+                          <div id="collapseFive" class="accordion-collapse collapse show" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+                            <div class="accordion-body fw-light" style="text-align: center" id="straightFlush"></div>
+                            <p class="lead" style="text-align: center">Five cards of sequential rank of the same suit.</p>
+                          </div>
+                      </div>
+
+                      <!-- ACCORDION ITEM 6 -->
+                      <div class="accordion-item mb-3 fw-light">
+                        <h2 class="accordion-header" id="headingSix">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                            <strong>Four of a kind</strong>
+                          </button>
+                          </h2>
+                          <div id="collapseSix" class="accordion-collapse collapse show" aria-labelledby="headingSix" data-bs-parent="#accordionExample">
+                            <div class="accordion-body fw-light" style="text-align: center" id="fourKind"></div>
+                            <p class="lead" style="text-align: center">Four cards of one rank, one card of another rank.</p>
+                          </div>
+                      </div>
+
+                      <!-- ACCORDION ITEM 7 -->
+                      <div class="accordion-item mb-3 fw-light">
+                        <h2 class="accordion-header" id="headingSeven">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                            <strong>Full house</strong>
+                          </button>
+                          </h2>
+                          <div id="collapseSeven" class="accordion-collapse collapse show" aria-labelledby="headingSeven" data-bs-parent="#accordionExample">
+                            <div class="accordion-body fw-light" style="text-align: center" id="fullHouse"></div>
+                            <p class="lead" style="text-align: center">Three cards of one rank, two cards of another rank.</p>
+                          </div>
+                      </div>
+
+                      <!-- ACCORDION ITEM 8 -->
+                      <div class="accordion-item mb-3 fw-light">
+                        <h2 class="accordion-header" id="headingEight">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                            <strong>Flush</strong>
+                          </button>
+                          </h2>
+                          <div id="collapseEight" class="accordion-collapse collapse show" aria-labelledby="headingEight" data-bs-parent="#accordionExample">
+                            <div class="accordion-body fw-light" style="text-align: center" id="flush"></div>
+                            <p class="lead" style="text-align: center">Five cards of the same suit, not all of sequential rank.</p>
+                          </div>
+                      </div>
+
+                      <!-- ACCORDION ITEM 9 -->
+                      <div class="accordion-item mb-3 fw-light">
+                        <h2 class="accordion-header" id="headingNine">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                            <strong>Straight</strong>
+                          </button>
+                          </h2>
+                          <div id="collapseNine" class="accordion-collapse collapse show" aria-labelledby="headingNine" data-bs-parent="#accordionExample">
+                            <div class="accordion-body fw-light" style="text-align: center" id="straight"></div>
+                            <p class="lead" style="text-align: center">Five cards of sequential rank, not all of the same suit.</p>
+                          </div>
+                      </div>
+
+                      <!-- ACCORDION ITEM 10 -->
+                      <div class="accordion-item mb-3 fw-light">
+                        <h2 class="accordion-header" id="headingTen">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                            <strong>Three of a kind</strong>
+                          </button>
+                          </h2>
+                          <div id="collapseTen" class="accordion-collapse collapse show" aria-labelledby="headingTen" data-bs-parent="#accordionExample">
+                            <div class="accordion-body fw-light" style="text-align: center" id="threeKind"></div>
+                            <p class="lead" style="text-align: center">Three cards of one rank, two cards of two other ranks.</p>
+                          </div>
+                      </div>
+
+                      <!-- ACCORDION ITEM 11 -->
+                      <div class="accordion-item mb-3 fw-light">
+                        <h2 class="accordion-header" id="headingEleven">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+                            <strong>Two pair</strong>
+                          </button>
+                          </h2>
+                          <div id="collapseEleven" class="accordion-collapse collapse show" aria-labelledby="headingEleven" data-bs-parent="#accordionExample">
+                            <div class="accordion-body fw-light" style="text-align: center" id="twoPair"></div>
+                            <p class="lead" style="text-align: center">Two cards of one rank, two cards of another rank, one card of a third rank.</p>
+                          </div>
+                      </div>
+
+                      <!-- ACCORDION ITEM 12 -->
+                      <div class="accordion-item mb-3 fw-light">
+                        <h2 class="accordion-header" id="headingTwelve">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">
+                            <strong>One pair</strong>
+                          </button>
+                          </h2>
+                          <div id="collapseTwelve" class="accordion-collapse collapse show" aria-labelledby="headingTwelve" data-bs-parent="#accordionExample">
+                            <div class="accordion-body fw-light" style="text-align: center" id="onePair"></div>
+                            <p class="lead" style="text-align: center">Two cards of one rank, three cards of three other ranks.</p>
+                          </div>
+                      </div>
+
+                      <!-- ACCORDION ITEM 13 -->
+                      <div class="accordion-item mb-3 fw-light">
+                        <h2 class="accordion-header" id="headingThirteen">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThirteen" aria-expanded="false" aria-controls="collapseThirteen">
+                            <strong>High card (lowest rank)</strong>
+                          </button>
+                          </h2>
+                          <div id="collapseThirteen" class="accordion-collapse collapse show" aria-labelledby="headingThirteen" data-bs-parent="#accordionExample">
+                            <div class="accordion-body fw-light" style="text-align: center" id="highCard"></div>
+                            <p class="lead" style="text-align: center">Cards are all of distinct ranks, are not all sequential in rank, and not all of the same suit.</p>
+                          </div>
+                      </div>
+
+                      <div class="heading-line"></div>
+                      <!-- ACCORDION ITEM 14 -->
+                      <div class="accordion-item mb-3 fw-light">
+                        <h2 class="accordion-header" id="headingFourteen">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFourteen" aria-expanded="false" aria-controls="collapseFourteen">
+                            <strong>Suit rankings</strong>
+                          </button>
+                          </h2>
+                          <div id="collapseFourteen" class="accordion-collapse collapse show" aria-labelledby="headingFourteen" data-bs-parent="#accordionExample">
+                            <p class="lead" style="text-align: center">Spades > Hearts > Diamonds > Clubs > No suit specified</p>
+                          </div>
+                      </div>
+
+                      <div class="heading-line"></div>
+                      <!-- ACCORDION ITEM 15 -->
+                      <div class="accordion-item mb-3 fw-light">
+                        <h2 class="accordion-header" id="headingFifteen">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFifteen" aria-expanded="false" aria-controls="collapseFifteen">
+                            <strong>If Hands have the same rank...</strong>
+                          </button>
+                          </h2>
+                          <div id="collapseFifteen" class="accordion-collapse collapse show" aria-labelledby="headingFifteen" data-bs-parent="#accordionExample">
+                            <div class="accordion-body fw-light">
+                              <ul>
+                                <li>Cards in the hands are compared individually from left to right.</li>
+                                <li>Cards are compared on rank first, then suit.</li>
+                                <li>If one card is better than the other, the hand that it belongs to is the better one.</li>
+                                <li>If, when comparing at a given index, one hand has a card but the other does not have one at that index, 
+                                    the hand that actually has the card is the better one.</li>
+                              </ul>
+                            </div>
+                          </div>
+                      </div>
+
+                      <!-- ACCORDION ITEM 16 -->
+                      <div class="accordion-item mb-3 fw-light">
+                        <h2 class="accordion-header" id="headingSixteen">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSixteen" aria-expanded="false" aria-controls="collapseSixteen">
+                            <strong>Hands without suit specified...</strong>
+                          </button>
+                          </h2>
+                          <div id="collapseSixteen" class="accordion-collapse collapse show" aria-labelledby="headingSixteen" data-bs-parent="#accordionExample">
+                            <div class="accordion-body fw-light">
+                              <ul>
+                                <li>A card need not necessarily have its suit specified.</li>
+                                <li>Simply enter <code>?</code> in place of the suit; ie, <code>6?</code></li>
+                                <li>Cards without specified suits counts towards non-flush ranks (which require a specified suit);  
+                                    for example, in the hand <code>3? 3d 3h 5s 7s</code>, <code>3?</code> counts towards completing a three of a kind.</li>
+                                <li>Non specified suits are lower than those specified. As such, the above example loses to <code>3d 3h 3s 5s 7s</code>.</li>
+                                <li>When checking if cards are present, one without a specified suit counts for a card with the 
+                                    same rank and a specified suit. For example, <code>4?</code> counts for <code>4s</code>.</li>
+                              </ul>
+                            </div>
+                          </div>
+                      </div>
+
+                    </div>
+                  </div>
+              </div>
             </div>
+          </div>
         </div>
-        <div class="row text-center mt-5"></div>
-        <div>
-          <button type="button" class="rounded-pill btn-rounded border-primary">
-            <a class="nav-link" href="/liars-poker/">
-              OK
-            </a>
-          </button>
-        </div>
-        <div class="row text-center mt-5"></div>
-        <div class="row text-center mt-5"></div>
-        <div class="row text-center mt-5"></div>
+      </div>
+      <div class="row text-center mt-5"></div>
+      <div>
+        <button type="button" class="rounded-pill btn-rounded border-primary">
+          <a class="nav-link" href="/liars-poker/">
+            OK
+          </a>
+        </button>
+      </div>
+      <div class="row text-center mt-5"></div>
+      <div class="row text-center mt-5"></div>
+      <div class="row text-center mt-5"></div>
     </section>
 
     <footer class="footer fixed-bottom">
@@ -206,6 +392,93 @@
         var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'));
         var collapseList = collapseElementList.map(function (collapseEl) {
             return new bootstrap.Collapse(collapseEl)
+        });
+
+        var sampleHands = [
+          {
+            "handType": "straightFlush", 
+            "cards": ["/img/5_of_hearts.png", 
+                      "/img/6_of_hearts.png", 
+                      "/img/7_of_hearts.png", 
+                      "/img/8_of_hearts.png", 
+                      "/img/9_of_hearts.png"]
+          },
+          {
+            "handType": "fourKind", 
+            "cards": ["/img/3_of_spades.png", 
+                      "/img/3_of_hearts.png", 
+                      "/img/3_of_diamonds.png", 
+                      "/img/3_of_clubs.png", 
+                      "/img/4_of_spades.png"]
+          },
+          {
+            "handType": "fullHouse", 
+            "cards": ["/img/jack_of_spades.png", 
+                      "/img/jack_of_hearts.png", 
+                      "/img/jack_of_diamonds.png", 
+                      "/img/ace_of_hearts.png", 
+                      "/img/ace_of_clubs.png"]
+          },
+          {
+            "handType": "flush", 
+            "cards": ["/img/king_of_spades.png", 
+                      "/img/queen_of_spades.png", 
+                      "/img/10_of_spades.png", 
+                      "/img/7_of_spades.png", 
+                      "/img/5_of_spades.png"]
+          },
+          {
+            "handType": "straight", 
+            "cards": ["/img/10_of_spades.png", 
+                      "/img/9_of_clubs.png", 
+                      "/img/8_of_clubs.png", 
+                      "/img/7_of_diamonds.png", 
+                      "/img/6_of_hearts.png"]
+          },
+          {
+            "handType": "threeKind", 
+            "cards": ["/img/5_of_spades.png", 
+                      "/img/5_of_diamonds.png", 
+                      "/img/5_of_clubs.png", 
+                      "/img/jack_of_diamonds.png", 
+                      "/img/8_of_spades.png"]
+          },
+          {
+            "handType": "twoPair", 
+            "cards": ["/img/9_of_spades.png", 
+                      "/img/9_of_diamonds.png", 
+                      "/img/4_of_hearts.png", 
+                      "/img/4_of_clubs.png", 
+                      "/img/ace_of_spades.png"]
+          },
+          {
+            "handType": "onePair", 
+            "cards": ["/img/10_of_hearts.png", 
+                      "/img/10_of_diamonds.png", 
+                      "/img/ace_of_clubs.png", 
+                      "/img/king_of_clubs.png", 
+                      "/img/jack_of_hearts.png"]
+          },
+          {
+            "handType": "highCard", 
+            "cards": ["/img/king_of_diamonds.png", 
+                      "/img/10_of_diamonds.png", 
+                      "/img/8_of_spades.png", 
+                      "/img/5_of_spades.png", 
+                      "/img/4_of_hearts.png"]
+          },
+        ];
+
+        sampleHands.forEach(h => {
+          var frag = document.createDocumentFragment();
+          h.cards.forEach(c => {
+            var img = document.createElement('img');
+            img.src = c;
+            img.width = "128";
+            img.height = "186";
+            frag.appendChild(img);
+          });
+          document.getElementById(h.handType).appendChild(frag);
         });
     </script>
   </body>
