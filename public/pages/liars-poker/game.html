@@ -492,7 +492,7 @@
       
       let client = null;
       let clientId = null;
-      let clientName = null;
+      let clientName = localStorage.getItem("clientName"); 
       let gameId = null;
 
       const gameMenu = document.getElementById("gameMenu");
@@ -519,7 +519,9 @@
 
       socket.on('connect', () => {
         clientId = socket.id;
-        clientName = clientId;
+        if(clientName === null) {
+          clientName = clientId;
+        }
         gameId = window.location.pathname.substring(19);
 
         const payLoad = {
@@ -530,7 +532,7 @@
         
         socket.emit("join", payLoad);
         
-        console.log(clientId); //test
+        // console.log(clientId); //test
       });
 
       btnGameMode.addEventListener("click", e => {
@@ -674,6 +676,7 @@
       socket.on("changeName", (response) => {
         
         clientName = response.newClientName;
+        localStorage.setItem("clientName", clientName);
 
         var str = '<ol>'
         response.clientsBasicInfo.forEach (c => {
@@ -684,7 +687,7 @@
           e.innerHTML = str;
         });
 
-        console.log("Client name Set successfully " + clientName);
+        // console.log("Client name Set successfully " + clientName);
       });
 
       socket.on("update", (response) => {
