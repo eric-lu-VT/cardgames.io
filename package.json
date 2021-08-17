@@ -21,6 +21,7 @@
   "license": "ISC",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
+    "body-parser": "^1.19.0",
     "bootstrap": "^5.0.0-beta3",
     "card-deck": "^1.0.1",
     "express": "^4.17.1",

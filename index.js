@@ -18,6 +18,8 @@ const path = require('path');
 const server = express()
   .use('/', express.static(path.join(__dirname, 'public')))
   .get("/", (req,res)=> res.sendFile(__dirname + "/public/pages/index.html"))
+  .get("/contact", (req,res)=> res.sendFile(__dirname + "/public/pages/contact.html"))
+  .get("/privacy-policy", (req,res)=> res.sendFile(__dirname + "/public/pages/privacy-policy.html"))
   .get("/liars-poker", (req,res)=> res.sendFile(__dirname + "/public/pages/liars-poker/join.html")) 
   .get("/liars-poker/help", (req,res)=> res.sendFile(__dirname + "/public/pages/liars-poker/help.html")) 
   .get("/liars-poker/rooms/:id", (req,res)=> {
@@ -43,7 +45,7 @@ var values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'ki
 var suits = ['null', 'clubs', 'diamonds', 'hearts', 'spades'];
 
 io.of("/liars-poker").on('connection', client => {
-  console.log('Client connected: Liars Poker');
+  // console.log('Client connected: Liars Poker');
 
   client.on("disconnect", () => {
     if(client.gameId !== undefined) {
@@ -128,7 +130,7 @@ io.of("/liars-poker").on('connection', client => {
       }
     }
     
-    console.log('Client disconnected');
+    // console.log('Client disconnected');
   });
 
   //a user want to create a new game
@@ -480,10 +482,10 @@ io.of("/liars-poker").on('connection', client => {
 });
 
 io.of("/test").on('connection', client => {
-  console.log('Client connected: Test');
+  // console.log('Client connected: Test');
 
   client.on("join", () => {
-    console.log("Test function recieved");
+    // console.log("Test function recieved");
   });
 });
 
