@@ -39,8 +39,7 @@ const server = express()
 const io = socketIO(server);
 
 var Deck = require('card-deck');
-var values = ['2', '3', '4', '5', '6', '7', '8', '9', 
-              '10', 'jack', 'queen', 'king', 'ace'];
+var values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace'];
 var suits = ['null', 'clubs', 'diamonds', 'hearts', 'spades'];
 
 io.of("/liars-poker").on('connection', client => {
