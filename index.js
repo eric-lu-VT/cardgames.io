@@ -18,8 +18,10 @@ const path = require('path');
 const server = express()
   .use('/', express.static(path.join(__dirname, 'public')))
   .get("/", (req,res)=> res.sendFile(__dirname + "/public/pages/index.html"))
-  .get("/contact", (req,res)=> res.sendFile(__dirname + "/public/pages/contact.html"))
-  .get("/privacy-policy", (req,res)=> res.sendFile(__dirname + "/public/pages/privacy-policy.html"))
+  .get("/settings", (req,res)=> res.sendFile(__dirname + "/public/pages/site-details/settings.html"))
+  .get("/about", (req,res)=> res.sendFile(__dirname + "/public/pages/site-details/about.html"))
+  .get("/contact", (req,res)=> res.sendFile(__dirname + "/public/pages/site-details/contact.html"))
+  .get("/privacy-policy", (req,res)=> res.sendFile(__dirname + "/public/pages/site-details/privacy-policy.html"))
   .get("/liars-poker", (req,res)=> res.sendFile(__dirname + "/public/pages/liars-poker/join.html")) 
   .get("/liars-poker/help", (req,res)=> res.sendFile(__dirname + "/public/pages/liars-poker/help.html")) 
   .get("/liars-poker/rooms/:id", (req,res)=> {

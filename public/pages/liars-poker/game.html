@@ -65,7 +65,7 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark menu shadow fixed-top">
-      <div class="container">
+      <div class="container-fluid">
         <a class="navbar-brand" href="/">netcardgames.org</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -88,6 +88,8 @@
                 Site Details
               </a>
               <ul class="navbar-dark dropdown-menu menu shadow" aria-labelledby="navbarDropdown">
+                <li class="nav-item"><a class="nav-link" href="/settings">Settings</a></li>
+                <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
                 <li class="nav-item"><a class="nav-link" href="/privacy-policy">Privacy Policy</a></li>
               </ul>
@@ -518,6 +520,7 @@
       let clientId = null;
       let clientName = localStorage.getItem("clientName"); 
       let gameId = null;
+      txtName.value = localStorage.getItem("clientName");
 
       const gameMenu = document.getElementById("gameMenu");
       const initialScreen = document.getElementById("initialScreen");
