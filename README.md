@@ -32,7 +32,6 @@ A website that hosts functional implementations of various card games, to be pla
 ## Roadmap
 - Main Website
   - Add more info pages (about, faq, etc.) 
-  - Add dropdowns on header bar
   - Persist data (including reconnection capabilities)
 - Liar's Poker
   - Refactor frontend code
