@@ -6,7 +6,7 @@
     <meta name="description" content="Play card games like Liar's Poker and President online for free with no sign-up. All you need are your friends and your electronic devices.">
     <meta name="author" content="Eric Lu">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Contact - netcardgames.org</title>
+    <title>President - netcardgames.org</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/fontawesome.css">
     <link rel="stylesheet" href="../assets/vendors/css/glightbox.min.css">
@@ -17,6 +17,12 @@
         left: 37.5%;
         padding: 2px;
         margin-bottom: 16px
+      }
+      .form-control {
+          position: absolute;
+          width: 25%;
+          left: 37.5%;
+          align-self: center;
       }
     </style>
   </head>
@@ -61,31 +67,44 @@
       <div class="container">
         <div class="row text-center mt-5"></div>
         <div class="row mt-5 mb-4 g-3 text-center">
-          <h1 class="display-3 fw-bold text-uppercase text-center">Contact</h1>
+          <h1 class="display-3 fw-bold text-uppercase">President</h1>
           <div class="heading-line"></div>
-        </div>
-
-        <form method="POST" action="https://formspree.io/f/mbjqpkrb" class="row">
-          <div class="col-lg-12 mb-3">
-            <input type="text" name="name" placeholder="Name" id="name" class="shadow form-control form-control-lg">
-          </div>
-          <div class="col-lg-12 mb-3">
-            <input type="email" name="_replyto" placeholder="Email Address" id="email" class="shadow form-control form-control-lg">
-          </div>
-          <div class="col-lg-12 mb-3">
-            <textarea type="text" name="message" placeholder="Type your message here..." id="message" rows="8" class="shadow form-control form-control-lg"></textarea>
-          </div>
-          <div class="text-center">
-            <button type="submit" class="btn btn-primary rounded-pill pt-3 pb-3">
-              Submit
-              <i class="fas fa-paper-plane"></i>
+          <div>
+            <button type="button" class="rounded-pill btn-rounded border-primary" style="margin-bottom: 0px" id="btnCreate">
+              <a class="nav-link">
+                Create New Game
+              </a>
             </button>
           </div>
-        </form>
-        <div class="row text-center mt-5"></div>
-        <div class="row text-center mt-5"></div>
-        <div class="row text-center mt-5"></div>
 
+          <div style="position: relative">
+            <h4 class="fw-bold lead mb-3">OR</h4>
+            <input type="email" placeholder="Enter Game Code" id="txtGameId" class="form-control form-control-md" style="text-align: center">
+          </div>
+
+          <div>
+            <button type="button" class="rounded-pill btn-rounded border-primary" style="margin-top: 26px" id="btnJoin">
+              <a class="nav-link">
+                Join Game
+              </a>
+            </button>
+          </div>
+
+          <div>
+            <button type="button" class="rounded-pill btn-rounded border-primary">
+              <a class="nav-link" href="/president/help">
+                Help
+              </a>
+            </button>
+          </div>
+            
+          <div>
+            <h4 class="fw-bold lead mb-3" id="txtJoinError"></h4>
+          </div>
+        </div>
+        <div class="row text-center mt-5"></div>
+        <div class="row text-center mt-5"></div>
+        <div class="row text-center mt-5"></div>
       </div>
     </section>
 
@@ -108,11 +127,44 @@
     </footer>
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script>
       var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
       var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
         return new bootstrap.Dropdown(dropdownToggleEl);
       });
+      
+      let clientId =  null;
+
+      const btnCreate = document.getElementById("btnCreate");
+      const txtGameId = document.getElementById("txtGameId");
+      const btnJoin = document.getElementById("btnJoin");
+      
+      var socket = io("/president");
+
+      socket.on('connect', () => {
+        clientId = socket.id;
+        // console.log(clientId); //test
+      });
+
+      btnCreate.addEventListener("click", e => {
+        socket.emit("create", clientId);
+      });
+
+      btnJoin.addEventListener("click", e => {
+        if(txtGameId.value === "") {
+          document.getElementById("txtJoinError").innerHTML = 
+          "Failed to join a game. You did not enter a valid game code in.";
+        }
+        else {
+          window.location.href = "/president/rooms/" + txtGameId.value;
+        }
+      });
+
+      socket.on("create", (response) => {
+        window.location.href = "/president/rooms/" + response.gameId;
+      });
+
     </script>
   </body>
 </html>

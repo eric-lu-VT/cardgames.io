@@ -6,7 +6,7 @@
     <meta name="description" content="Play card games like Liar's Poker and President online for free with no sign-up. All you need are your friends and your electronic devices.">
     <meta name="author" content="Eric Lu">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Liar's Poker - netcardgames.org</title>
+    <title>President - netcardgames.org</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="../../assets/css/fontawesome.css">
     <link rel="stylesheet" href="../../assets/vendors/css/glightbox.min.css">
@@ -48,11 +48,22 @@
       #gameScreen {
         display: none;
       }
-
-      #takeTurnScreen {
+      #txtOutOfRound {
         display: none;
       }
       #resultScreen {
+        display: none;
+      }
+      #cardTradingScreen {
+        display: none;
+      }
+      #isTraderScreen {
+        display: none;
+      }
+      #isNotTraderScreen {
+        display: none;
+      }
+      #notTradingScreen {
         display: none;
       }
       #cannotJoinScreen {
@@ -61,6 +72,7 @@
       #cannotJoinScreen2 {
         display: none;
       }
+
     </style>
   </head>
   <body>
@@ -125,9 +137,7 @@
             </div>
             <div class="heading-line"></div>
 
-            <p class="gameMode lead"><strong>Game mode: </strong>NORMAL</p>
             <p class="startNumCards lead"></p>
-            <p class="maxNumCards lead"></p>
           </div>
         </div>
       </div>
@@ -157,7 +167,6 @@
                     
                     <p class="gameMode lead"><strong>Game mode: </strong>NORMAL</p>
                     <p class="startNumCards lead"></p>
-                    <p class="maxNumCards lead"></p>
 
                   </div>
                 </div>
@@ -189,14 +198,6 @@
                   <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                     <div class="accordion-body fw-light">
                       <div>
-                        <button type="button" class="rounded-pill btn-rounded border-primary" style="margin-bottom: 0px" id="btnGameMode">
-                          <a class="nav-link" id=btnGameModeTxt>
-                            Game Mode: NORMAL
-                          </a>
-                        </button>
-                      </div>
-                      <div class="row text-center mt-4"></div>
-                      <div>
                         <button type="button" class="rounded-pill btn-rounded border-primary" style="margin-bottom: 0px" id="btnInit">
                           <a class="nav-link">
                             Start Game
@@ -204,7 +205,7 @@
                         </button>
                       </div>
                       <div class="row text-center mt-4" id = "initErrorMsg">
-                        <h4 class="fw-bold lead mb-3">Cannot start game: need at least two players</h4>
+                        <h4 class="fw-bold lead mb-3">Cannot start game: need at least four players</h4>
                       </div>
                     </div>
                   </div>
@@ -234,30 +235,30 @@
                   <div class="container">
                     <div class="row mt-5 mb-4 g-3 text-center">
                       <p class="lead" id="txtYourTurn"></p>
-                      <p class="lead">You may either propose a better hand, or challenge the previous player.</p>
-                      <p class="lead">(An example of a valid hand request is: "Kd 5s Tc Ah Qc".)</p>
 
                       <div class="heading-line"></div>
                       
                       <div style="position: relative; margin-bottom: 0px">
-                        <input type="text" placeholder="Propose New Hand" id="txtNextHand" class="form-control form-control-md" style="text-align: center">
-                        <button type="button" class="rounded-pill btn-rounded border-primary" style="margin-top: 42px" id="btnTakeTurn">
+                        <input type="text" placeholder="Propose Cards" id="txtNextHand" class="form-control form-control-md" style="text-align: center">
+                      </div>
+                      <div>
+                        <button type="button" class="rounded-pill btn-rounded border-primary btnTakeTurn" style="margin-top: 42px">
                           <a class="nav-link">
                             Take Turn
                           </a>
                         </button>
-                        <h4 class="fw-bold lead" style="margin-bottom: 0px">OR</h4>
+                         <h4 class="fw-bold lead" style="margin-bottom: 0px">OR</h4>
                       </div>
                       <div>
-                        <button type="button" class="rounded-pill btn-rounded border-primary" style="margin-bottom: 0px" id="btnChallenge">
+                        <button type="button" class="rounded-pill btn-rounded border-primary" style="margin-bottom: 0px" id="btnPass">
                           <a class="nav-link">
-                            Challenge
+                            Pass
                           </a>
                         </button>
                       </div>
 
                       <div>
-                        <h4 class="fw-bold lead mb-3" id ="txtTakeTurnMsg"></h4>
+                        <h4 class="fw-bold lead mb-3" id ="errorMsg"></h4>
                       </div>
                     </div>
                   </div>
@@ -266,20 +267,23 @@
                 <section id = "gameWaitScreen">
                   <div class="container">
                     <div class="row mt-5 mb-4 g-3 text-center">
+                      <p class="lead" id="txtOutOfRound"></p>
                       <p class="lead" id="txtNotYourTurn"></p>
                     </div>
                   </div>
                 </section>
                 
-                <!-- ACCORDION ITEM 7 -->
-                <div class="accordion-item shadow mb-3 fw-light">
-                  <h2 class="accordion-header" id="headingSeven">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                <!-- ACCORDION ITEM 3 -->
+                <div class="accordion-item shadow mb-3 fw-light" id="yourCards">
+                  <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                       <strong>Your Cards</strong>
                     </button>
                   </h2>
-                  <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#accordionExample">
-                    <div class="accordion-body fw-light" style="text-align: center" id = "imgCurrentUserCards"></div>
+                  <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body fw-light" style="text-align: center">
+                      <p class="lead currentUserCards"></p>
+                    </div>
                   </div>
                 </div> 
               </section>
@@ -293,36 +297,37 @@
                 </h2>
                 <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
                   <div class="accordion-body fw-light" style="text-align: center">
-                    
                     <p class="lead" id="playersNumCards"></p>
-
                   </div>
                 </div>
               </div>
+
               <!-- ACCORDION ITEM 5 -->
               <div class="accordion-item shadow mb-3 fw-light" id="middleCards">
                 <h2 class="accordion-header" id="headingFive">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                    <strong>Community Cards</strong>
+                    <strong>Current Top Of Pile</strong>
                   </button>
                 </h2>
                 <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
-                  <div class="accordion-body fw-light" style="text-align: center" id="imgSharedCards"></div>
-                </div>
-              </div>  
-
-              <!-- ACCORDION ITEM 6 -->
-              <div class="accordion-item shadow mb-3 fw-light">
-                <h2 class="accordion-header" id="headingSix">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                    <strong>Current Hand To Beat</strong>
-                  </button>
-                </h2>
-                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accordionExample">
-                  <div class="accordion-body fw-light" style="text-align: center" id="imgCurrentHand"></div>
+                  <div class="accordion-body fw-light" style="text-align: center" id="currentPile"></div>
                 </div>
               </div> 
 
+              <!-- ACCORDION ITEM 6 -->
+              <div class="accordion-item shadow mb-3 fw-light" id="finishOrderDisplay">
+                <h2 class="accordion-header" id="headingSix">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                    <strong>Finish Order</strong>
+                  </button>
+                </h2>
+                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accordionExample">
+                  <div class="accordion-body fw-light" style="text-align: center">
+                    <p class="lead finishOrder"></p>
+                  </div>
+                </div>
+              </div> 
+              
             </div>
           </div>
         </div>
@@ -332,7 +337,7 @@
       </div>
     </section>
 
-    <section id="takeTurnScreen">
+    <section id = "resultScreen">
       <div class="container">
         <div class="row text-center mt-5"></div>
         <div class="row text-center mt-5"></div>
@@ -341,47 +346,37 @@
           <div class="col-md-12">
             <div class="accordion" id="accordionExample">
               <!-- ACCORDION ITEM 7 -->
-              <div class="accordion-item shadow mb-3 fw-light" id="txtCdRmv">
+              <div class="accordion-item shadow mb-3 fw-light">
                 <h2 class="accordion-header" id="headingSeven">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
-                    <strong>Cards removed from the current hand:</strong>
+                    <strong>Finish Order</strong>
                   </button>
                 </h2>
                 <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#accordionExample">
-                  <div class="accordion-body fw-light" style="text-align: center" id="imgRemovedCards"></div>
+                  <div class="accordion-body fw-light" style="text-align: center">
+                    <p class="lead finishOrder"></p>
+                  </div>
                 </div>
               </div>
               <!-- ACCORDION ITEM 8 -->
               <div class="accordion-item shadow mb-3 fw-light">
                 <h2 class="accordion-header" id="headingEleven">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
-                    <strong>Cards added to the current hand:</strong>
+                    <strong>Results</strong>
                   </button>
                 </h2>
                 <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#accordionExample">
-                  <div class="accordion-body fw-light" style="text-align: center" id="imgAddedCards">
+                  <div class="accordion-body fw-light" style="text-align: center">
+                    <p class="lead" id="playerPoints"></p>
+                    <p class="lead" id="winnerDetermined"></p>
                   </div>
                 </div>
               </div>
-              <!-- ACCORDION ITEM 9 -->
-              <div class="accordion-item shadow mb-3 fw-light">
-                <h2 class="accordion-header" id="headingNine">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
-                    <strong>Current hand to beat:</strong>
-                  </button>
-                </h2>
-                <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#accordionExample">
-                  <div class="accordion-body fw-light" style="text-align: center" id="imgCurrentHand2">
-                  </div>
-                </div>
-              </div>
-              <div id="showBtnOk2">
-                <button type="button" class="rounded-pill btn-rounded border-primary" id="btnOk2">
-                  <a class="nav-link">
-                    OK
-                  </a>
-                </button>
-              </div>   
+              <button type="button" class="rounded-pill btn-rounded border-primary" id="btnOk">
+                <a class="nav-link">
+                  OK
+                </a>
+              </button> 
             </div>
           </div>
         </div>
@@ -391,7 +386,7 @@
       </div>
     </section>
 
-    <section id="resultScreen">
+    <section id = "cardTradingScreen">
       <div class="container">
         <div class="row text-center mt-5"></div>
         <div class="row text-center mt-5"></div>
@@ -399,53 +394,90 @@
         <div class="row mt-5">
           <div class="col-md-12">
             <div class="accordion" id="accordionExample">
-              <!-- ACCORDION ITEM 10 -->
-              <div class="accordion-item shadow mb-3 fw-light" id="txtCdRmv">
-                <h2 class="accordion-header" id="headingTen">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
-                    <strong>The cards in play:</strong>
-                  </button>
-                </h2>
-                <div id="collapseTen" class="accordion-collapse collapse" aria-labelledby="headingTen" data-bs-parent="#accordionExample">
-                  <div class="accordion-body fw-light" style="text-align: center" id="imgCardsInPlay"></div>
-                </div>
-              </div>
-              <!-- ACCORDION ITEM 11 -->
-              <div class="accordion-item shadow mb-3 fw-light">
-                <h2 class="accordion-header" id="headingEleven">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
-                    <strong>Current hand status:</strong>
-                  </button>
-                </h2>
-                <div id="collapseEleven" class="accordion-collapse collapse" aria-labelledby="headingEleven" data-bs-parent="#accordionExample">
-                  <div class="accordion-body fw-light" style="text-align: center" id="imgCurrentHand3"></div>
-                  <div class="accordion-body fw-light" style="text-align: center">
-                    <p class="lead" id="txtTurnResult"></p>
+              <section id="isTraderScreen">
+                <div class="container">
+                  <div class="row mt-5 mb-4 g-3 text-center">
+                    <p class="lead" id="traderTxt"></p>
+        
+                    <div class="heading-line"></div>   
+                    <div style="position: relative">
+                      <input type="text" placeholder="Ask For Cards" id="takeCardsTxt" class="form-control form-control-md" style="text-align: center">
+                    </div>
+                    <div style="position: relative">
+                      <input type="text" placeholder="Give Up Cards" id="giveCardsTxt" class="form-control form-control-md" style="text-align: center; margin-top: 42px">
+                    </div>
+                    <div>
+                      <button type="button" class="rounded-pill btn-rounded border-primary" id="btnRequestCards" style="margin-top: 90px">
+                        <a class="nav-link">
+                          Request Cards
+                        </a>
+                      </button>
+                    </div>
+
+                    <div>
+                      <h4 class="fw-bold lead mb-3" id ="requestResult"></h4>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <!-- ACCORDION ITEM 12 -->
-              <div class="accordion-item shadow mb-3 fw-light">
-                <h2 class="accordion-header" id="headingTwelve">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">
-                    <strong>Round results:</strong>
-                  </button>
-                </h2>
-                <div id="collapseTwelve" class="accordion-collapse collapse" aria-labelledby="headingTwelve" data-bs-parent="#accordionExample">
-                  <div class="accordion-body fw-light" style="text-align: center">
-                    <p class="lead" id="txtTurnResult2"></p>
-                    <p class="lead" id="txtTurnResult3"></p>
-                    <p class="lead" id="txtTurnResult4"></p>
+
+                <!-- ACCORDION ITEM 9 -->
+                <div class="accordion-item shadow mb-3 fw-light">
+                  <h2 class="accordion-header" id="headingNine">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                      <strong>Your cards:</strong>
+                    </button>
+                  </h2>
+                  <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#accordionExample">
+                    <div class="accordion-body fw-light" style="text-align: center">
+                      <p class="lead currentUserCards"></p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div id="showBtnOk">
-                <button type="button" class="rounded-pill btn-rounded border-primary" id="btnOk">
-                  <a class="nav-link">
-                    OK
-                  </a>
-                </button>
-              </div>   
+              </section>
+
+              <section id="isNotTraderScreen">
+                <div class="container">
+                  <div class="row mt-5 mb-4 g-3 text-center">
+                    <p class="lead" id="notTraderTxt"></p>
+                  </div>
+
+                  <!-- ACCORDION ITEM 10 -->
+                  <div class="accordion-item shadow mb-3 fw-light" id="txtCdRmv">
+                    <h2 class="accordion-header" id="headingTen">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                        <strong>Your cards:</strong>
+                      </button>
+                    </h2>
+                    <div id="collapseTen" class="accordion-collapse collapse" aria-labelledby="headingTen" data-bs-parent="#accordionExample">
+                      <div class="accordion-body fw-light" style="text-align: center">
+                        <p class="lead currentUserCards"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section id="notTradingScreen">
+                <div class="container">
+                  <div class="row mt-5 mb-4 g-3 text-center">
+                    <p class="lead">Please wait for others to complete their trading...</p>
+                  </div>
+
+                  <!-- ACCORDION ITEM 11 -->
+                  <div class="accordion-item shadow mb-3 fw-light">
+                    <h2 class="accordion-header" id="headingEleven">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+                        <strong>Your cards:</strong>
+                      </button>
+                    </h2>
+                    <div id="collapseEleven" class="accordion-collapse collapse" aria-labelledby="headingEleven" data-bs-parent="#accordionExample">
+                      <div class="accordion-body fw-light" style="text-align: center">
+                        <p class="lead currentUserCards"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
             </div>
           </div>
         </div>
@@ -454,7 +486,7 @@
         <div class="row text-center mt-5"></div>
       </div>
     </section>
-
+    
     <section id="cannotJoinScreen">
       <div class="container">
         <div class="row text-center mt-5"></div>
@@ -525,31 +557,33 @@
       const gameMenu = document.getElementById("gameMenu");
       const initialScreen = document.getElementById("initialScreen");
       const gameScreen = document.getElementById("gameScreen");
-      const gameScreenAlivePlayers = document.getElementById("gameScreenAlivePlayers");
       const gamePlayScreen = document.getElementById("gamePlayScreen");
       const gameWaitScreen = document.getElementById("gameWaitScreen");
-      const takeTurnScreen = document.getElementById("takeTurnScreen");
       const resultScreen = document.getElementById("resultScreen");
+      const cardTradingScreen = document.getElementById("cardTradingScreen");
+      const isTraderScreen = document.getElementById("isTraderScreen");
+      const isNotTraderScreen = document.getElementById("isNotTraderScreen");
+      const notTradingScreen = document.getElementById("notTradingScreen");
+      
       const cannotJoinScreen = document.getElementById("cannotJoinScreen");
       const cannotJoinScreen2 = document.getElementById("cannotJoinScreen2");
 
-      const btnGameMode = document.getElementById("btnGameMode");
       const btnInit = document.getElementById("btnInit");
       const btnChangeName = document.getElementById("btnChangeName");
-      const btnTakeTurn = document.getElementById("btnTakeTurn");
-      const btnChallenge = document.getElementById("btnChallenge");
+      const btnTakeTurn = document.querySelectorAll(".btnTakeTurn");
+      const btnPass = document.getElementById("btnPass");
       const btnOk = document.getElementById("btnOk");
-      const btnOk2 = document.getElementById("btnOk2");
-      const btnGoBack = document.querySelectorAll(".btnGoBack");
+      const btnRequestCards = document.getElementById("btnRequestCards");
 
-      var socket = io("/liars-poker");
+      var socket = io("/president");
 
       socket.on('connect', () => {
         clientId = socket.id;
         if(clientName === null) {
           clientName = clientId;
         }
-        gameId = window.location.pathname.substring(19);
+        gameId = window.location.pathname.substring(17);
+        // console.log(gameId);
 
         const payLoad = {
           "clientId": clientId,
@@ -559,31 +593,7 @@
         
         socket.emit("join", payLoad);
         
-        // console.log(clientId); //test
-      });
-
-      btnGameMode.addEventListener("click", e => {
-        const payLoad = {
-          "gameId": gameId,
-          "gameMode": ""
-        }
-
-        if(document.getElementById("btnGameModeTxt").innerText.includes("NORMAL")) {
-          payLoad.gameMode = "HOLD_EM";
-          document.getElementById("btnGameModeTxt").innerText = "Game mode: HOLD_EM";
-          Array.from(document.getElementsByClassName("gameMode")).forEach(e => {
-            e.innerHTML = "<strong>Game mode: </strong>HOLD_EM";
-          });
-        }
-        else if(document.getElementById("btnGameModeTxt").innerText.includes("HOLD_EM")) { 
-          payLoad.gameMode = "NORMAL";
-          document.getElementById("btnGameModeTxt").innerText = "Game mode: NORMAL";
-          Array.from(document.getElementsByClassName("gameMode")).forEach(e => {
-            e.innerHTML = "<strong>Game mode: </strong>NORMAL";
-          });
-        }
-    
-        socket.emit("changeGameMode", payLoad);
+        // console.log("PRESIDENT: " + clientId); //test
       });
 
       btnInit.addEventListener("click", e => {
@@ -613,23 +623,38 @@
         }
       });
 
-      btnTakeTurn.addEventListener("click", e => {
-  
-        const payLoad = {
+      btnTakeTurn.forEach(b => {
+        b.addEventListener("click", e => {
+          const payLoad = {
             "clientId": clientId,
             "gameId": gameId,
-            "nextHandStr": txtNextHand.value
+            "nextPileStr": txtNextHand.value
+          }
+
+          socket.emit("takeTurn", payLoad);
+        });
+      })
+
+      btnPass.addEventListener("click", e => {
+        
+        const payLoad = {
+          "clientId": clientId,
+          "gameId": gameId
         }
 
-        socket.emit("takeTurn", payLoad);
+        socket.emit("passTurn", payLoad);
       });
 
-      btnChallenge.addEventListener("click", e => {
+      btnRequestCards.addEventListener("click", e => {
 
         const payLoad = {
-            "gameId": gameId
+          "clientId": clientId,
+          "gameId": gameId,
+          "takeCardsTxt": takeCardsTxt.value,
+          "giveCardsTxt": giveCardsTxt.value
         }
-        socket.emit("challenge", payLoad);
+
+        socket.emit("requestCards", payLoad);
       });
 
       var handlerOk = function(e) {
@@ -647,13 +672,7 @@
         }
         socket.emit("home", payLoad);
       }
-
-      btnGoBack.forEach(b => {
-        b.addEventListener("click", e => {
-          window.location.href = "/liars-poker/";
-        });
-      });
-
+      
       //join
       socket.on("join", (response) => {
         if(response.active) {
@@ -671,7 +690,7 @@
           Array.from(document.getElementsByClassName("gameId")).forEach(e => {
             e.innerHTML = gameId;
           });
-          document.title = gameId + " - Liar's Poker - netcardgames.org"
+          document.title = gameId + " - President - netcardgames.org"
 
           var str = '<ol>'
           response.clientsBasicInfo.forEach (c => {
@@ -681,9 +700,6 @@
           
           Array.from(document.getElementsByClassName("startNumCards")).forEach(e => {
             e.innerHTML = "<strong>Starting # of cards: </strong>" + response.START_NUM_CARDS;
-          });
-          Array.from(document.getElementsByClassName("maxNumCards")).forEach(e => {
-            e.innerHTML = "<strong>Lose at this # of cards: </strong>" + response.MAX_NUM_CARDS;
           });
           Array.from(document.getElementsByClassName("playerNames")).forEach(e => {
             e.innerHTML = str;
@@ -706,7 +722,12 @@
 
         var str = '<ol>'
         response.clientsBasicInfo.forEach (c => {
-          str += '<li>'+ c.clientName + '</li>';
+          if(response.isActive) {
+            str += '<li>'+ c.clientName + " (" + c.points + " points)</li>";
+          }
+          else {
+            str += '<li>'+ c.clientName + '</li>';
+          }
         });
         str += '</ol>';
         Array.from(document.getElementsByClassName("playerNames")).forEach(e => {
@@ -717,231 +738,211 @@
       });
 
       socket.on("update", (response) => {
-                
-        initialScreen.style.display = "none";
-        takeTurnScreen.style.display = "none";
-        resultScreen.style.display = "none";
-        gameScreen.style.display = "block";
-        if(response.targetPlayer.alive) {
-          gameScreenAlivePlayers.style.display = "block";
-          if(response.isCurrentPlayer) {
+        if(response.result.includes("ERROR")) {
+          document.getElementById("errorMsg").innerHTML = response.result;
+        }
+        else {
+        
+          document.getElementById("errorMsg").innerHTML = "";
+          initialScreen.style.display = "none";
+          gameScreen.style.display = "block";
+          resultScreen.style.display = "none";
+          cardTradingScreen.style.display = "none";
+
+          if(!response.isCurrentPlayer) {
+            gamePlayScreen.style.display = "none";
+            gameWaitScreen.style.display = "block";
+            if(!response.targetPlayer.inRound) {
+              console.log("test"); //temp
+              document.getElementById("txtOutOfRound").style.display = "block";
+              document.getElementById("txtOutOfRound").innerHTML = "You sucessfully played all your cards!";
+              document.getElementById("yourCards").style.display = "none";
+            }
+          }
+          else {
             gamePlayScreen.style.display = "block";
             gameWaitScreen.style.display = "none";
           }
-          else {
-            gamePlayScreen.style.display = "none";
-            gameWaitScreen.style.display = "block";
-          }
-        }
-        else {
-          gameScreenAlivePlayers.style.display = "none";
-          gamePlayScreen.style.display = "none";
-          gameWaitScreen.style.display = "block";
-        }
-        // TODO: display in HTML
-        var str = '<ol>'
-        response.alivePlayersBasicInfo.forEach (p => {
-          var cardEmoji = "";
-          for(var i = 0; i < p.numCards; i++) {
-            cardEmoji += "🃏";
-          }
-          str += '<li>'+ p.clientName + ' (' + cardEmoji + ')</li>';
-        });
-        str += '</ol>';
-        document.getElementById("playersNumCards").innerHTML = str;
-                
-        while(document.getElementById("imgSharedCards").firstChild) {
-          document.getElementById("imgSharedCards").removeChild(document.getElementById("imgSharedCards").firstChild);
-        }
-        if(response.gameMode === "HOLD_EM") {
-          var sharedCardsFrag = document.createDocumentFragment();
-          response.sharedCardsURL.forEach(t => {
-            var img = document.createElement('img');
-            img.src = t;
-            img.width = "128";
-            img.height = "186";
-            sharedCardsFrag.appendChild(img);
+          Array.from(document.getElementsByClassName("currentUserCards")).forEach(e => {
+            while(e.firstChild) {
+              e.removeChild(e.firstChild);
+            }
+            var currentUserCardsFrag = document.createDocumentFragment();
+            response.targetPlayer.cardsAsURL.forEach(t => {
+              var img = document.createElement('img');
+              img.src = t;
+              img.width = "128";
+              img.height = "186";
+              currentUserCardsFrag.appendChild(img);
+            });
+            e.appendChild(currentUserCardsFrag);
+            
+            // e.innerHTML = response.targetPlayer.cardsAsStr;
           });
-          document.getElementById("imgSharedCards").appendChild(sharedCardsFrag);
-        }
-        else {
-          document.getElementById("middleCards").style.display = "none";
-        }
-                
-        while(document.getElementById("imgCurrentHand").firstChild) {
-          document.getElementById("imgCurrentHand").removeChild(document.getElementById("imgCurrentHand").firstChild);
-        }
-        var currentHandFrag = document.createDocumentFragment();
-        response.currentHandURL.forEach(t => {
-          var img = document.createElement('img');
-          img.src = t;
-          img.width = "128";
-          img.height = "186";
-          currentHandFrag.appendChild(img);
-        });
-        document.getElementById("imgCurrentHand").appendChild(currentHandFrag);
 
-        while(document.getElementById("imgCurrentUserCards").firstChild) {
-          document.getElementById("imgCurrentUserCards").removeChild(document.getElementById("imgCurrentUserCards").firstChild);
-        }
-        var currentUserCardsFrag = document.createDocumentFragment();
-        response.targetPlayer.cardsAsURL.forEach(t => {
-          var img = document.createElement('img');
-          img.src = t;
-          img.width = "128";
-          img.height = "186";
-          currentUserCardsFrag.appendChild(img);
-        });
-        document.getElementById("imgCurrentUserCards").appendChild(currentUserCardsFrag);
-
-        document.getElementById("txtNotYourTurn").innerHTML = "<strong>" + response.currentPlayerName + "</strong> is moving currently...";
-        document.getElementById("txtYourTurn").innerHTML = "<strong>" + response.currentPlayerName + "</strong>, it is currently your turn.";
-
-        clientName = response.newClientName;
-
-        var str = '<ol>'
-        response.alivePlayersBasicInfo.forEach (c => {
-          if(c.clientName === response.currentPlayerName) {
-            str += '<li> <b> <u>' + c.clientName + '</u> </b> </li>';
-          }
-          else {
-            str += '<li>' + c.clientName + '</li>';
-          }
-        });
-        str += '</ol>';
-        Array.from(document.getElementsByClassName("playerNames")).forEach(e => {
-          e.innerHTML = str;
-        });
-      });
-
-      socket.on("takeTurn", (response) => {
-        
-        if(response.result === "ERROR: weaker_hand") {
-          document.getElementById("txtTakeTurnMsg").innerHTML = 
-          "Failed to take a turn. Your request for a hand \"" + response.requestedHandStr + "\" is not better than the current hand.";
-        }
-        else if(response.result === "ERROR: invalid_hand") {
-          document.getElementById("txtTakeTurnMsg").innerHTML = 
-          "Your request for a hand is invalid. An example of a valid hand request is: \"Kd 5s Tc Ah Qc\".";
-        }
-        else if(response.result === "success") {
-          gameScreen.style.display = "none";
-          gameScreenAlivePlayers.style.display = "none";
-          gamePlayScreen.style.display = "none";
-          gameWaitScreen.style.display = "none";
-          takeTurnScreen.style.display = "block";
-          btnOk2.addEventListener("click", handlerOk);
-          document.getElementById("txtCdRmv").style.display = "block";
-                    
-          while(document.getElementById("imgRemovedCards").firstChild) {
-            document.getElementById("imgRemovedCards").removeChild(document.getElementById("imgRemovedCards").firstChild);
-          }
-          var temp = false;
-          var removedCardsFrag = document.createDocumentFragment();
-          response.removedCardsURL.forEach(t => {
-            temp = true;
-            var img = document.createElement('img');
-            img.src = t;
-            img.width = "128";
-            img.height = "186";
-            removedCardsFrag.appendChild(img);
+          var str = '<ol>'
+          response.inRoundBasicInfo.forEach(p => {
+            var cardEmoji = "";
+            for(var i = 0; i < p.numCards; i++) {
+              cardEmoji += "🃏";
+            }
+            str += '<li>'+ p.clientName + ' (' + cardEmoji + ')</li>';
           });
-          document.getElementById("imgRemovedCards").appendChild(removedCardsFrag);
-          if(!temp) {
-            document.getElementById("txtCdRmv").style.display = "none";
-          }
-
-          while(document.getElementById("imgAddedCards").firstChild) {
-            document.getElementById("imgAddedCards").removeChild(document.getElementById("imgAddedCards").firstChild);
-          }
-          var addedCardsFrag = document.createDocumentFragment();
-          response.addedCardsURL.forEach(t => {
-            var img = document.createElement('img');
-            img.src = t;
-            img.width = "128";
-            img.height = "186";
-            addedCardsFrag.appendChild(img);
-          });
-          document.getElementById("imgAddedCards").appendChild(addedCardsFrag);
-
-          while(document.getElementById("imgCurrentHand2").firstChild) {
-            document.getElementById("imgCurrentHand2").removeChild(document.getElementById("imgCurrentHand2").firstChild);
+          str += '</ol>';
+          document.getElementById("playersNumCards").innerHTML = str;
+          document.getElementById("txtNotYourTurn").innerHTML = "<strong>" + response.currentPlayerName + "</strong> is moving currently...";
+          document.getElementById("txtYourTurn").innerHTML = "<strong>" + response.currentPlayerName + "</strong>, it is currently your turn."; 
+          
+          while(document.getElementById("currentPile").firstChild) {
+            document.getElementById("currentPile").removeChild(document.getElementById("currentPile").firstChild);
           }
           var currentHandFrag = document.createDocumentFragment();
-          response.currentHandURL.forEach(t => {
+          response.newPileArr.forEach(t => {
             var img = document.createElement('img');
             img.src = t;
             img.width = "128";
             img.height = "186";
             currentHandFrag.appendChild(img);
           });
-          document.getElementById("imgCurrentHand2").appendChild(currentHandFrag);
-        }
-        if(!response.targetPlayer.alive) {
-          document.getElementById("showBtnOk2").style.display = "none";
+          document.getElementById("currentPile").appendChild(currentHandFrag);
+
+          var str = '<ol>';
+          response.inRoundBasicInfo.forEach(c => {
+            if(c.clientId === response.currentPlayerId) {
+              str += '<li> <b> <u>' + c.clientName + " (" + c.points + " points) </u> </b> </li>";
+            }
+            else {
+              str += '<li>' + c.clientName + " (" + c.points + " points) </li>";
+            }
+          });
+          str += '</ol>';
+          Array.from(document.getElementsByClassName("playerNames")).forEach(e => {
+            e.innerHTML = str;
+          });
+
+          if(response.roundPlacementBasicInfo.length === 0) {
+            document.getElementById("finishOrderDisplay").style.display = "none";
+          }
+          else {
+            document.getElementById("finishOrderDisplay").style.display = "block";
+            str = '<ol>';
+            response.roundPlacementBasicInfo.forEach(c => {
+              str += '<li>' + c.clientName + '</li>';
+            });
+            str += '</ol>';
+            Array.from(document.getElementsByClassName("finishOrder")).forEach(e => {
+              e.innerHTML = str;
+            });
+          }
         }
       });
 
-      socket.on("challenge", (response) => {
+      socket.on("endRound", (response) => {
 
+        initialScreen.style.display = "none";
         gameScreen.style.display = "none";
-        gameScreenAlivePlayers.style.display = "none";
-        gamePlayScreen.style.display = "none";
-        gameWaitScreen.style.display = "none";
         resultScreen.style.display = "block";
-                
-        while(document.getElementById("imgCardsInPlay").firstChild) {
-          document.getElementById("imgCardsInPlay").removeChild(document.getElementById("imgCardsInPlay").firstChild);
-        }
-        var cardsInPlayFrag = document.createDocumentFragment();
-        response.cardsInPlayURL.forEach(t => {
-          var img = document.createElement('img');
-          img.src = t;
-          img.width = "128";
-          img.height = "186";
-          cardsInPlayFrag.appendChild(img);
+        document.getElementById("txtOutOfRound").style.display = "none";
+        document.getElementById("txtOutOfRound").innerHTML = "";
+        document.getElementById("yourCards").style.display = "block";
+
+        var str = '<ol>';
+        response.roundPlacementBasicInfo.forEach(c => {
+          str += '<li>' + c.clientName + '</li>';
         });
-        document.getElementById("imgCardsInPlay").appendChild(cardsInPlayFrag);
-                
-        while(document.getElementById("imgCurrentHand3").firstChild) {
-          document.getElementById("imgCurrentHand3").removeChild(
-          document.getElementById("imgCurrentHand3").firstChild);
-        }
-        var currentHandFrag = document.createDocumentFragment();
-        response.currentHandURL.forEach(t => {
-          var img = document.createElement('img');
-          img.src = t;
-          img.width = "128";
-          img.height = "186";
-          currentHandFrag.appendChild(img);
+        str += '</ol>';
+        Array.from(document.getElementsByClassName("finishOrder")).forEach(e => {
+          e.innerHTML = str;
         });
-        document.getElementById("imgCurrentHand3").appendChild(currentHandFrag);
-                    
-        if(response.gameContains) {
-          document.getElementById("txtTurnResult").innerHTML = "The hand listed above could be found in play.";
-          document.getElementById("txtTurnResult2").innerHTML = "The current player <strong>" 
-            + response.currentPlayerStr + "</strong> lost this round and has been given an extra card.";
-        }
-        else {
-          document.getElementById("txtTurnResult").innerHTML = "The hand listed above could not be found in play.";
-          document.getElementById("txtTurnResult2").innerHTML = "The previous player <strong>" 
-          + response.prevPlayerStr + "</strong> lost this round and has been given an extra card.";
-        }
-        if(response.playerEliminated) {
-          document.getElementById("txtTurnResult3").innerHTML ="<strong>" + response.eliminatedPlayerStr
-            + "</strong> has too many cards and has been eliminated.";
-        }
+
+        str = '<ol>'
+        response.roundPlacementBasicInfo.forEach(p => {
+          str += '<li>'+ p.clientName + ' (' + p.points + ' points)</li>';
+        });
+        str += '</ol>';
+        document.getElementById("playerPoints").innerHTML = str;
+
         if(response.winnerDetermined) {
-          document.getElementById("txtTurnResult4").innerHTML = "<strong>" + response.winnerPlayerStr + 
-            "</strong> has won the game!";
-            document.getElementById("showBtnOk").style.display = "block";
+          document.getElementById("winnerDetermined").style.display = "block";
+          str = "The following player(s) have won the game: "
+          response.winnerPlayerStr.forEach(p => {
+            str += (p + ", ");
+          });   
+          document.getElementById("winnerDetermined").innerHTML = str.substring(0, str.length - 2);
           btnOk.addEventListener("click", handlerHome);
         }
         else {
+          document.getElementById("winnerDetermined").style.display = "none";
+          document.getElementById("winnerDetermined").innerHTML = "";
           btnOk.addEventListener("click", handlerOk);
-          if(!response.targetPlayer.alive) {
-            document.getElementById("showBtnOk").style.display = "none";
+        }
+      });
+
+      socket.on("beginTrading", (response) => {
+        
+        resultScreen.style.display = "none";
+        cardTradingScreen.style.display = "block";
+        Array.from(document.getElementsByClassName("currentUserCards")).forEach(e => {
+          while(e.firstChild) {
+            e.removeChild(e.firstChild);
           }
+          var currentUserCardsFrag = document.createDocumentFragment();
+          response.targetPlayer.cardsAsURL.forEach(t => {
+            var img = document.createElement('img');
+            img.src = t;
+            img.width = "128";
+            img.height = "186";
+            currentUserCardsFrag.appendChild(img);
+          });
+          e.appendChild(currentUserCardsFrag);
+        });
+
+        if(response.isTrading) {
+          if(response.isTrader) {
+            isTraderScreen.style.display = "block";
+            isNotTraderScreen.style.display = "none";
+            notTradingScreen.style.display = "none";
+            document.getElementById("traderTxt").innerHTML = 
+              "You may ask <strong>" + response.tradingWithName + "</strong> for <strong>" + response.numCardsTrading +"</strong> card(s)...";
+          }
+          else {
+            isTraderScreen.style.display = "none";
+            isNotTraderScreen.style.display = "block";
+            notTradingScreen.style.display = "none";
+            document.getElementById("notTraderTxt").innerHTML = 
+              "<strong>" + response.tradingWithName + "</strong> is switching <strong>" + response.numCardsTrading +"</strong> card(s) with you...";
+          }
+        }
+        else {
+          isTraderScreen.style.display = "none";
+          isNotTraderScreen.style.display = "none";
+          notTradingScreen.style.display = "block";
+        }
+      }); 
+
+      socket.on("requestCards", (response) => {
+        if(response.result.includes("ERROR")) {
+          document.getElementById("requestResult").innerHTML = response.result;
+        }
+        else {
+          document.getElementById("requestResult").innerHTML = "";
+          isTraderScreen.style.display = "none";
+          isNotTraderScreen.style.display = "none";
+          notTradingScreen.style.display = "block";
+          Array.from(document.getElementsByClassName("currentUserCards")).forEach(e => {
+            while(e.firstChild) {
+              e.removeChild(e.firstChild);
+            }
+            var currentUserCardsFrag = document.createDocumentFragment();
+            response.targetPlayer.cardsAsURL.forEach(t => {
+              var img = document.createElement('img');
+              img.src = t;
+              img.width = "128";
+              img.height = "186";
+              currentUserCardsFrag.appendChild(img);
+            });
+            e.appendChild(currentUserCardsFrag);
+          });
         }
       });
 
@@ -949,24 +950,14 @@
         
         if(response.num_ok_needed !== 0) {
           btnOk.removeEventListener("click", handlerOk);
-          btnOk2.removeEventListener("click", handlerOk);
           //TODO: add more
         }
       });
 
       socket.on("home", () => {
-        window.location.href = "/liars-poker";
-        /*
-        slidingPanel.style.display = "block";
-        initialScreen.style.display = "block";
-        gameScreen.style.display = "none";
-        gameScreenAlivePlayers.style.display = "none";
-        gamePlayScreen.style.display = "none";
-        gameWaitScreen.style.display = "none";
-        resultScreen.style.display = "none";
-        */
+        btnOk.removeEventListener("home", handlerHome);
+        window.location.href = "/president";
       });
-
     </script>
   </body>
 </html>
