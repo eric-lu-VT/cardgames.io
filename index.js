@@ -791,9 +791,9 @@ io.of("/president").on('connection', client => {
             break;
           case 3:
             curGame.START_NUM_CARDS = 13;
-            break;2
+            break;
           case 4:
-            curGame.START_NUM_CARDS = 13; //temp
+            curGame.START_NUM_CARDS = 13;
             break;
           case 5:
             curGame.START_NUM_CARDS = 10;
