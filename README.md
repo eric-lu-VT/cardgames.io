@@ -12,9 +12,11 @@ A website that hosts functional implementations of various card games, to be pla
 ![img](https://i.imgur.com/GMlVY9X.png)
 ![img](https://i.imgur.com/VN0CIL0.png)
 
+### President
+
 ## Games Implemented
 - Liar's Poker (also known as Commune)
-- President (coming soon!)
+- President
 
 ## Known Issues
 - General
@@ -28,15 +30,23 @@ A website that hosts functional implementations of various card games, to be pla
   - On join screen, hostship of game does not switch if host leaves
   - Name changing
     - Some text doesn't update immediately after name change
+- President
+  - Fix point display 
+  - Change some show/noshow elements depending on position in game
+  - Change text input to need only rank (needs rank and suit currently) 
 
 ## Roadmap
 - Main Website
   - Add more info pages (about, faq, etc.) 
   - Persist data (including reconnection capabilities)
+  - Add more documentation
+  - Display "there are no cards in the pile" when there are no cards in the pile (keep getting null error for some reason)
 - Liar's Poker
   - Refactor frontend code
   - Add spectators to active games
   - Add name length limit
+- President
+  - Drag/drop cards rather than text input
 
 
 
