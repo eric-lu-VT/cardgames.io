@@ -5,14 +5,17 @@ A website that hosts functional implementations of various card games, to be pla
 ## Impressions
 
 ### Main Website
-![img](https://i.imgur.com/b95VQJf.png)
+![img](https://i.imgur.com/Cs4CvS7.png)
 
 ### Liar's Poker
-![img](https://i.imgur.com/RhMIaXe.png)
-![img](https://i.imgur.com/GMlVY9X.png)
-![img](https://i.imgur.com/VN0CIL0.png)
+![img](https://i.imgur.com/03YDIBi.png)
+![img](https://i.imgur.com/XQtsf0U.png)
+![img](https://i.imgur.com/FlZwOrS.png)
 
 ### President
+![img](https://i.imgur.com/6raidzn.png)
+![img](https://i.imgur.com/XiVpmQf.png)
+![img](https://i.imgur.com/Ng78IVj.png)
 
 ## Games Implemented
 - Liar's Poker (also known as Commune)
