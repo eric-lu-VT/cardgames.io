@@ -51,6 +51,9 @@ A website that hosts functional implementations of various card games, to be pla
 - President
   - Drag/drop cards rather than text input
 
+## Credits
+[Bootstrap 5 Portfolio Template](https://github.com/MuriungiPatrick/Bootstrap-5-portfolio-template) - frontend template
+
 
 
 
