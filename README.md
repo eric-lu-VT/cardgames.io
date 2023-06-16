@@ -1,4 +1,8 @@
-# [netcardgames.org](https://netcardgames.org/)
+# netcardgames.org
+
+Note: This website is no longer actively deployed.
+
+---------
 
 A website that hosts functional implementations of various card games, to be played live and with multiplayer support. 
 
